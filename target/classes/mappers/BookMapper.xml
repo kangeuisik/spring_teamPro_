@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jafa.repository.BookRepository">
+
+	<sql id="condition">
+		<trim prefix="and">
+			<choose>
+				<when test="type=='B'.toString()">
+					bookName like '%'||#{keyword}||'%'
+				</when>
+				<when test="type=='A'.toString()">
+					author like '%'||#{keyword}||'%'
+				</when>
+				<when test="type=='P'.toString()">
+					publisher like '%'||#{keyword}||'%'
+				</when>
+			</choose>
+		</trim>
+		<if test="cate_id!=null and cate_id!=''">
+			and cate_id = #{cate_id}
+			<if test="subCate_id!=null and subCate_id!=''">
+				and subCate_id = #{subCate_id}
+			</if>
+		</if>
+	</sql>
+	
+	<!-- 총 게시물(책) 수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from book_table
+		<where>
+			<include refid="condition" />
+		</where>
+	</select>
+	
+	<!-- 게시물(책) 목록 -->
+	<select id="selectByCategory" resultType="bookVO">
+		<![CDATA[
+		select 
+			rn, bookNo, cate_id, subCate_id, bookName, author, publisher, bookInfo, bookImage, price, regDate
+		from
+		(
+		    select 
+		        rownum as rn, bookNo, cate_id, subCate_id, bookName, author, publisher, bookInfo, bookImage, price, regDate
+		    from 
+		        book_table
+		    where rownum <= #{maxRow}
+		]]>
+		<include refid="condition"/>
+		<![CDATA[ 
+		) 
+		where rn > #{minRow}
+		]]> 
+	</select>
+	
+	<!-- 게시물 상세 -->
+	<select id="findByBookNo" resultType="bookVO">
+		select * from book_table where bookNo=#{bookNo}
+	</select>
+
+</mapper>
