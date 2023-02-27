@@ -22,10 +22,10 @@ public class SampleController {
 	@Autowired
 	private BookRepository bookRepository;
 
+
+	
 	@PostMapping("/list") // @GetMapping에 @RequestBody붙이니까 안됨
 	public Map<String, Object> list(@RequestBody Criteria criteria) {
-		System.out.println("타입 : "+ criteria.getType());
-		System.out.println("키워드 : "+ criteria.getKeyword());
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<BookVO> bookList = bookRepository.selectByCategory(criteria);
 		Pagination pagination = new Pagination(criteria, bookRepository.getTotalCount(criteria));

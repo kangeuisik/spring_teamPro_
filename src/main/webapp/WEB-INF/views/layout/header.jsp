@@ -87,7 +87,7 @@
 	        <a class="dropdown-item" href="${contextPath }/hope/requestMaster">대여/도서신청 관리</a>
 	        <a class="dropdown-item" href="${contextPath }/hope/requestList">비치 희망도서 신청현황</a>
 	        <a class="dropdown-item" href="${contextPath }/hope/requestForm">비치 희망도서 신청하기</a>
-	        <a class="dropdown-item" href="#">도서 대여하기</a>
+	        <a class="dropdown-item" href="${contextPath }/book/takeList">도서 대여하기</a>
 	        <a class="dropdown-item" href="#">도서 대여 신청하기</a>
 	        
 
@@ -95,13 +95,13 @@
 	    </li>
 	<!-- 메뉴얼 -->
 	    <li class="nav-item dropdown">
-	      <a class="nav-link dropdown-toggle topMenu text-body" href="#" id="navbardrop" data-toggle="dropdown">
+	      <a class="nav-link dropdown-toggle topMenu text-body" href="${contextPath }/admin/home" id="navbardrop" data-toggle="dropdown">
 	        관리자페이지
 	      </a>
 	      <div class="dropdown-menu ">
 	        <a class="dropdown-item" href="#">회원정보관리</a> <!-- 글쓰기 -->
-	        <a class="dropdown-item" href="#">---2</a>
-	        <a class="dropdown-item" href="#">---3</a>
+	        <a class="dropdown-item" href="${contextPath }/admin/home">도서관리자 메뉴</a>
+	        <a class="dropdown-item" href="${contextPath }/admin">---3</a>
 	      </div>
 		</li>
 	</nav>	

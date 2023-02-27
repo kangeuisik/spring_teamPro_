@@ -38,11 +38,11 @@
 	<select id="selectByCategory" resultType="bookVO">
 		<![CDATA[
 		select 
-			rn, bookNo, cate_id, subCate_id, bookName, author, publisher, bookInfo, bookImage, price, regDate
+			rn, bookNo, cate_id, subCate_id, bookName, author, publisher, bookImage, price, regDate
 		from
 		(
 		    select 
-		        rownum as rn, bookNo, cate_id, subCate_id, bookName, author, publisher, bookInfo, bookImage, price, regDate
+		        rownum as rn, bookNo, cate_id, subCate_id, bookName, author, publisher, bookImage, price, regDate
 		    from 
 		        book_table
 		    where rownum <= #{maxRow}
@@ -59,4 +59,62 @@
 		select * from book_table where bookNo=#{bookNo}
 	</select>
 
+	<!-- 총 게시물(책) 수 -->
+	<select id="getCount" resultMap="testMap">
+		select 
+			s.cate_id, s.subCate_id, s.subCate_name, count(b.subCate_id) as count 
+		from 
+			book_subCategory s LEFT OUTER JOIN book_table b on s.subCate_id = b.subCate_id 
+		group by s.cate_id, s.subCate_id, s.subCate_name
+	</select>
+	
+	<resultMap id="testMap" type="HashMap">
+		<result property="cate_id" column="cate_id" />
+		<result property="subCate_id" column="subCate_id" />
+		<result property="subCate_name" column="subCate_name" />
+		<result property="count" column="count" />
+	</resultMap>
+	
+	<!--
+	 ================대여===================== 
+	 -->
+	<sql id="takeCondition">
+		<trim prefix="and">
+			<choose>
+				<when test="type=='BN'.toString()">
+					bookName like '%'||#{keyword}||'%'
+				</when>
+				<when test="type=='AT'.toString()">
+					author like '%'||#{keyword}||'%'
+				</when>
+				<when test="type=='PS'.toString()">
+					publisher like '%'||#{keyword}||'%'
+				</when>			
+			</choose>
+		</trim>
+		<!-- 
+		<if test="tid!=null and tid!=''">
+			and tid = #{tid}
+		</if>
+		 -->		
+	</sql>
+	
+		<select id="getTakeList" resultType="bookVO">
+		<![CDATA[
+		select 
+			rn, bookNo, cate_id, bookName, author, publisher, take, takePrice
+		from
+		(
+		    select 
+		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice
+		    from 
+		        book_table
+		    where rownum <= #{maxRow}
+		]]>
+			<include refid="takeCondition"/>
+		<![CDATA[ 
+	) 
+		where rn > #{minRow}
+		]]> 
+	</select>
 </mapper>

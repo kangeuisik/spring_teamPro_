@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jafa.domain.Criteria;
+import com.jafa.domain.Pagination;
 import com.jafa.repository.BookRepository;
 import com.jafa.repository.CategoryRepository;
 
@@ -56,4 +57,14 @@ public class BookController {
 		return "book/detail";
 	}
 	
+	//====================================대여=============================================//
+	
+	@GetMapping("/takeList")
+	public String takeList(@ModelAttribute("cri") Criteria criteria,
+			Model model) {
+		model.addAttribute("takeList", bookRepository.getTakeList(criteria))
+		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
+		return "book/takeList"; 
+		
+	}
 }

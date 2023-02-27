@@ -87,21 +87,17 @@ function paginationRender(p) {
 	$('#pagination').html(output);
 	
 	// 페이지이동
-	$('.pagination a').on('click',function(e){
+		$('.pagination a').on('click',function(e){
 		e.preventDefault();
-		//console.log("type : "+type);
-		//console.log("keyword : "+keyword);
-		
-		
-		
+		let typeValue = $('select[name="type"]').val(); // id가 type인 셀렉트태그 선택된 값 가져오기
+		let keywordValue = $('input[name="keyword"]').val(); // name속성이 keyword인 input태그 값 가져오기
+				
 		let criteria = {
 			page : $(this).attr('href'),
 			cate_id : p.criteria.cate_id,
-			subCate_id : p.criteria.subCate_id
-			/*
-			type : typeInput,
-			keyword : keywordInput
-			*/
+			subCate_id : p.criteria.subCate_id,
+			type : typeValue,
+			keyword : keywordValue
 		}
 		
 		$.ajax({
@@ -124,85 +120,34 @@ function paginationRender(p) {
 	 
 }
 
+
 $(function() {
 
-	let cateValue = $('#cate option:selected').val(); // id가 cate인 셀렉트태그 선택된 값 가져오기
-	let subCateValue = $('#subCate option:selected').val(); // id가 subCate인 셀렉트태그 선택된 값 가져오기
-	//let typeValue = getSearchParam('type');
-	//let keywordValue = getSearchParam('keyword');
+	let cate_id = $('#cate option:selected').val(); // id가 cate인 셀렉트태그 선택된 값 가져오기
+	let subCate_id = $('#subCate option:selected').val(); // id가 subCate인 셀렉트태그 선택된 값 가져오기
+	let typeValue = $('select[name="type"]').val(); // id가 type인 셀렉트태그 선택된 값 가져오기
+	let keywordValue = $('input[name="keyword"]').val(); // name속성이 keyword인 input태그 값 가져오기
 
 	let criteria = {
-		cate_id : cateValue,
-		subCate_id : subCateValue
+		cate_id : cate_id,
+		subCate_id : subCate_id,
+		type : typeValue,
+		keyword : keywordValue
 	}
 	
 	bookService.list(criteria);
 	
-	// 검색 
-	$('.searchForm button').click(function(){
-		alert('검색');
-		/*
-		let type = new URLSearchParams(location.search).get('type');
-		let keyword = new URLSearchParams(location.search).get('keyword');
-		
-		let typeInput = $('<input/>',{
-			type : 'hidden',
-			name : 'type',
-			value : type
-		});
-		let keywordInput = $('<input/>',{
-			type : 'hidden',
-			name : 'keyword',
-			value : keyword
-		});
-		let criteria = {
-			cate_id : cateValue,
-			subCate_id : subCateValue,
-			type : typeInput.value,
-			keyword : keywordInput.value
-		};
-		console.log("카테 : "+criteria.cate_id);
-		console.log("서브카테 : "+criteria.subCate_id);
-		console.log("타입 : "+criteria.type);
-		console.log("키워드 : "+criteria.keyword);
-		*/
-		
-	})
-	
-	let detailForm = $('#detailForm');
-	let memberId = $('input[name="memberId"]').val();
-	let bookNoData = $('input[name="bookNo"]').val();
-	let price = $('input[name="price"]').val(); // 가격
-	let amount = $('input[name="amount"]'); // 수량
-	let total = $('input[name="total"]'); // 합계금액
-	
-	let count = amount.val();
-	// 감소
-	$('.minus').on('click', function() {
-		count--;
-		if(count < 1) {
-			count =1;
+	// 검색
+	$('.searchForm button').on('click',function(){
+		let searchForm = $('.searchForm');
+		if(cate_id != '' && subCate_id != '') { // 둘다 선택
+			searchForm.attr('action',`${contextPath}/book/list/${cate_id}/${subCate_id}`)
 		}
-		amount.val(count);
-		total.val(price * count);
+		else { // 하나만 선택
+			searchForm.attr('action',`${contextPath}/book/list/${cate_id}`)
+		}
+		searchForm.appendTo('body')
+			.submit();
 	});
-	
-	// 증가
-	$('.plus').on('click',function(){
-		count++;
-		amount.val(count);
-		total.val(price * count);
-	});
-	
-	// 장바구니 담기 버튼
-	$('.addCart').on('click', function() {
-		let cartVO = {
-			memberId : memberId,
-			bookNo : bookNoData,
-			amount : amount.val()
-		}		
-		cartService.add(cartVO);
-	});
-	
 	
 });

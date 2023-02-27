@@ -77,6 +77,7 @@
 	</select>
 	
   	<!-- ========== '승인대기'자만 열람(관리자페이지에서 필요) ==========-->
+  	
 	<select id="getRequestMaster" resultType="HopeVO">
 		<![CDATA[
 		select 

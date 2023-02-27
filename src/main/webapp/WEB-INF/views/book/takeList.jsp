@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp" %>
+    <%@include file="../layout/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,7 @@
 <body>
 <div class="container">
 	<div class="jumbotron">
-		<h1 class="title">비치희망도서 신청현황</h1>
+		<h2>대여하기</h2>
 	</div>
 	<div class="row">
 		<div class="col-3">
@@ -28,7 +28,7 @@
 					<a href="${contextPath }/book/takeList">도서대여 현황</a>
 				</li>
 				<li class="list-group-item">
-					<a href="${contextPath }/hope/#">도서대여 신청하기</a>
+					<a href="${contextPath }/book/#">도서대여 신청하기</a>
 				</li>
 			</ul>
 		</div>
@@ -37,9 +37,9 @@
 				<form class="form-inline searchForm">
 					<select name="type" class="form-control mr-2 cate">
 						<option>선택해주세요</option>
-						<option value="ID" ${cri.type == 'ID' ? 'selected':''}>아이디</option>
 						<option value="BN" ${cri.type == 'BN' ? 'selected':''}>책제목</option>
-						<option value="BW" ${cri.type == 'BW' ? 'selected':''}>책저자</option>			
+						<option value="AT" ${cri.type == 'AT' ? 'selected':''}>저자</option>
+						<option value="PS" ${cri.type == 'PS' ? 'selected':''}>출판사</option>			
 					</select>
 					<div class="form-group mr-2">
 						<input type="search" class="form-control" name="keyword" value="${cri.keyword}">
@@ -48,30 +48,30 @@
 						<button class="btn btn-primary">검색</button>
 					</div>
 					<div class="form-group mr-2">
-						<a href="${contextPath}/hope/requestList"  class="btn btn-info">새로고침</a>
+						<a href="${contextPath}/book/takeList"  class="btn btn-info">새로고침</a>
 					</div>
 				</form>		
 			</div>
 			<div>
 				<table class="table">
 					<tr>
-						<th>신청번호</th>
-						<th>책제목</th>
+						<th>책번호</th>
+						<th>분류</th>
+						<th>제목</th>
 						<th>저자</th>
 						<th>출판사</th>
-						<th>신청인</th>
-						<th>결과</th>
-						<th>비고</th>
+						<th>대여여부</th>
 					</tr>
-					<c:forEach items="${requestList }" var="r">
+					<c:forEach items="${takeList }" var="t">
 					<tr>
-						<td>${r.rno }</td>
-						<td>${r.nbookName }</td>
-						<td>${r.nbookWriter }</td>
-						<td>${r.npublisher }</td>
-						<td>${r.mid }</td>
-						<td>${r.result }</td>
-						<td>${r.etc }</td>
+						<td>${t.bookNo }</td>
+						<td>${t.cate_id }</td>
+						<td>${t.bookName }</td>
+						<td>${t.author }</td>
+						<td>${t.publisher }</td>
+						<td>
+							<a href="${t.bookNo }" class="btn btn-info" data-toggle="modal" data-target="#addTake">${t.take }</a> 
+						</td>
 					</tr>
 					</c:forEach>
 				</table>	
@@ -96,7 +96,58 @@
 		</div>	
 	</div>
 </div>
-
+<!-- 대여누르면 나오는 모달 창 -->
+<div class="modal" id="addTake">
+	<div class="modal-dialog">
+		<form action="${contextPath}/" method="post">
+			<div class="modal-content">
+				
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">대여 신청하기</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="form-group">
+						<ul class="list">
+							<h4>--대여시 알아야할 부분--</h4>
+						</ul>
+						<ul>
+							<li>기본 대여기간은 7일</li>
+							<li>대여금액은 기본대여기간을 기준으로 1000원</li>
+							<li>반납기한 초과시 3일초과시 과금 1000원추가 부과</li>
+							<li>최초 책 대여시 대여료 납부</li>
+						</ul>
+						<table class="table">
+							<tr>
+								<th>책제목</th>
+								<th>대여기간</th>
+								<th>대여료</th>
+							</tr>
+							<c:forEach>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					
+					<button class="btn btn-primary">대여신청하기</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+				</div>
+				
+			</div>
+			<!-- modal-content -->
+		</form>
+	</div>
+</div>
 </body>
 </html>
 <%@ include file="../layout/footer.jsp" %>

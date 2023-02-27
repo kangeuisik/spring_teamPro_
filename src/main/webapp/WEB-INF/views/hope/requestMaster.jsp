@@ -25,7 +25,7 @@
 					<a href="${contextPath }/hope/requestMaster">도서신청/대여관리(관리자용)</a>
 				</li>
 				<li class="list-group-item">
-					<a href="${contextPath }/hope/#">도서대여 현황</a>
+					<a href="${contextPath }/book/takeList">도서대여 현황</a>
 				</li>
 				<li class="list-group-item">
 					<a href="${contextPath }/hope/#">도서대여 신청하기</a>

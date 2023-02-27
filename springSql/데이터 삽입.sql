@@ -1,31 +1,25 @@
 DECLARE
     I NUMBER(5); 
 BEGIN
-    -- 언어 / 영어 
-    FOR i IN 1 .. 22
+    -- IT / 프로그래밍언어 
+    FOR i IN 1 .. 44
     LOOP
-        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName)
-        VALUES (bookNo_seq.NEXTVAL,'language','english', '영어책-'||I); 
+        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName, author, publisher)
+        VALUES (bookNo_seq.NEXTVAL,'information_technology','programming_language', '이것이 자바다-'||I, '신용권','한빛미디어'); 
     END LOOP; 
     
-    -- 언어 / 일본어 
-    FOR i IN 1 .. 21
+   -- IT / 데이터베이스  
+    FOR i IN 1 .. 42
     LOOP
-        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName)
-        VALUES (bookNo_seq.NEXTVAL,'language','japanese', '일본어책-'||I); 
+        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName, author, publisher)
+        VALUES (bookNo_seq.NEXTVAL,'information_technology','database', '이것이 오라클이다-'||I, '우재남', '한빛미디어'); 
     END LOOP; 
     
-    -- 언어 / 중국어 
-    FOR i IN 1 .. 27
+    -- IT / 웹사이트 
+    FOR i IN 1 .. 54
     LOOP
-        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName)
-        VALUES (bookNo_seq.NEXTVAL,'language','chinese', '중국어책-'||I); 
+        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName, author, publisher)
+        VALUES (bookNo_seq.NEXTVAL,'information_technology','website', 'Do it! 자바스크립트 + 제이쿼리 입문-'||I, '정인용','이지스퍼블리싱'); 
     END LOOP;     
-    
-    -- 자연과학 / 물리학
-    FOR i IN 1 .. 29
-    LOOP
-        INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName)
-        VALUES (bookNo_seq.NEXTVAL,'natural_science','physics', '물리학책-'||I); 
-    END LOOP;     
+         
 END;

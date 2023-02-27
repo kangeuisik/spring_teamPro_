@@ -31,7 +31,7 @@
 					<option value="${s.subCate_id}" ${cri.subCate_id == s.subCate_id ? 'selected':'' }>${s.subCate_name}</option>
 				</c:forEach>			
 			</select>
-			<select id="type" class="form-control mr-2">
+			<select name="type" class="form-control mr-2">
 				<option value="B" ${cri.type == 'B' ? 'selected':''}>책제목</option>
 				<option value="A" ${cri.type == 'A' ? 'selected':''}>저자</option>
 				<option value="P" ${cri.type == 'P' ? 'selected':''}>출판사</option>			

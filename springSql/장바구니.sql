@@ -1,5 +1,4 @@
 drop table test_member;
---테스트회원
 create table test_member(
     mNum NUMBER(10) PRIMARY KEY,
     mid VARCHAR2(1000) NOT NULL UNIQUE, 
@@ -14,10 +13,9 @@ INSERT INTO test_member(mNum, mid, mName) VALUES(mNum_seq.NEXTVAL,'lee','이순신'
 INSERT INTO test_member(mNum, mid, mName) VALUES(mNum_seq.NEXTVAL,'kim','김유신');
 
 commit;
-select * from test_member;
+select * from test_member ;
 
 drop table test_cart;
---장바구니
 create table test_cart(
     cartId NUMBER(10) PRIMARY KEY, -- 카트번호
     mid VARCHAR2(1000), -- 회원아이디, 외래키

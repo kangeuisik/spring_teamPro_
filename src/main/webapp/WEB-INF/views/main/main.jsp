@@ -41,17 +41,9 @@
 					도서쇼핑
 				</a> 
 			</div>
-		</div>
-		<div class="col-8">
-			<table>
-				<tr>
-					<th>sdfadsafdsafsdafdsfadsafdasfasdfasdf</th>
-				</tr>
-			</table>
-		</div>
+		</div>	<!-- col-8 end-->
 		<div class="col-4"  >
 			<div class="container" >
-				  <h5>---</h5><br>
 				  <ul class="nav nav-tabs" role="tablist">
 				    <li class="nav-item">
 				      <a class="nav-link active" data-toggle="tab" href="#home">공지사항</a>
@@ -63,10 +55,9 @@
 				      <a class="nav-link" data-toggle="tab" href="#menu2">기타게시판</a>
 				    </li>
 				  </ul>
-			</div>
+			</div> 
 			<div class="tab-content">
 			    <div id="home" class="container tab-pane active"><br>
-			      <h5>공지사항</h5>
 			      <table class="table">
 			      	<tr>
 			      		<td>
@@ -77,7 +68,6 @@
 			      </table>
 			    </div>
 			    <div id="menu1" class="container tab-pane fade"><br>
-			      <h5>도서리뷰</h5>
 			      <table class="table">
 			      	<tr>
 			      		<td>
@@ -87,7 +77,6 @@
 			      	</tr>
 			      </table>		    </div>
 			    <div id="menu2" class="container tab-pane fade"><br>
-			      <h5>기타게시글</h5>
 			      <table class="table">
 			      	<tr>
 			      		<td>
@@ -98,8 +87,21 @@
 			      </table>
 			    </div>
 			</div>
-		</div>
-	</div>
+		</div> <!-- col-4 end-->	
+	</div><!-- row end -->
+	<div class="row">
+		<div class="col-8">
+			<table>
+				<tr>
+					<th>sdfadsafdsafsdafdsfadsafdasfasdfasdf</th>
+				</tr>
+			</table>
+		</div><!-- col-8 end-->
+		<div class="col-4">
+		
+		</div><!-- col-4 end-->
+	</div><!-- row end -->
+
 
 </div>
 <%@include file="../layout/footer.jsp" %>

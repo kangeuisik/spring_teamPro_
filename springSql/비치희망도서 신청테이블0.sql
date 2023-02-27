@@ -1,9 +1,9 @@
 drop table hopeBook;
 create table hopeBook( --비치희망도서 신청 테이블
     rno int not null, --새도서 신청번호
-    mNum Number(10) not null,
-    mid VARCHAR2(1000) NOT NULL , 
-    mname varchar(1000) not null,-- 멤버번호 신청자는 나중에 회원작성되면 바뀜
+    mNum Number(10)not null ,
+    mid VARCHAR2(1000) not null , 
+    mname varchar(1000)not null ,-- 멤버번호 신청자는 나중에 회원작성되면 바뀜
     nbookName varchar(500) not null, --새 책이름 차후에 조인필요
     nbookWriter varchar(500) not null, -- 새책의 저자
     npublisher varchar(500) not null, -- 새 책의 출판사
@@ -29,3 +29,9 @@ values(rno_seq.nextval,3,'kim','김유신','수학의정석','김수학','나비출판사','승인
 select* from hopeBook;
 SELECT MAX(Rno)+1 as NewRno FROM hopeBook;
 commit;
+
+
+--update hopeBook set result ='거절', etc='그냥' where rno=1;
+
+select *from hopeBook where result='승인대기' and mname = '홍길동';
+

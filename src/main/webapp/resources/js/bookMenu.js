@@ -12,13 +12,13 @@ $(function() {
 		let form = $('<form>');
 		form.attr('method','get')
 		if(cate_id != undefined && subCate_id != undefined) { // cate_id, subCate_id 둘 다 있으면
-			form.attr('action',`${contextPath}/book/${href}/${cate_id}/${subCate_id}`)
+			form.attr('action',`${contextPath}/${href}/${cate_id}/${subCate_id}`)
 		}
 		else if(cate_id != undefined && subCate_id == undefined){ // cate_id만 있으면
-			form.attr('action',`${contextPath}/book/${href}/${cate_id}`)
+			form.attr('action',`${contextPath}/${href}/${cate_id}`)
 		}
 		else {
-			form.attr('action',`${contextPath}/book/${href}`)
+			form.attr('action',`${contextPath}/${href}`)
 		}
 		form.appendTo('body')
 			.submit();

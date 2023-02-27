@@ -1,5 +1,8 @@
 package com.jafa.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jafa.domain.Bookshop.CategoryDTO;
+import com.jafa.repository.BookRepository;
 import com.jafa.repository.CategoryRepository;
 
 @Controller
@@ -19,6 +23,9 @@ public class AdminController {
 	private CategoryRepository categoryRepository;
 	
 	@Autowired
+	private BookRepository bookRepository;
+	
+	@Autowired
 	private ServletContext application;
 	
 	// 관리자 홈
@@ -27,9 +34,10 @@ public class AdminController {
 		return "/admin/home";
 	}
 	
-	//글쓰기 폼 이동
 	@GetMapping("/book")
 	public String book() {
+		List<Map<String,Integer>> list = bookRepository.getCount();
+		application.setAttribute("subCate", list);
 		return "admin/book";
 	}
 	

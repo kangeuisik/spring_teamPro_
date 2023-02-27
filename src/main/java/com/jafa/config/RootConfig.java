@@ -22,6 +22,7 @@ import com.jafa.domain.Bookshop.BookCategory;
 import com.jafa.domain.Bookshop.BookSubCategory;
 import com.jafa.domain.Bookshop.BookVO;
 
+
 @Configuration
 @MapperScan("com.jafa.repository")
 @PropertySource(value = "classpath:database/oracle.properties")
