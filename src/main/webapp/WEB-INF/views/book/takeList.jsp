@@ -70,7 +70,10 @@
 						<td>${t.author }</td>
 						<td>${t.publisher }</td>
 						<td>
-							<a href="${t.bookNo }" class="btn btn-info" data-toggle="modal" data-target="#addTake">${t.take }</a> 
+							<a href="${t.bookName }" class="btn btn-info thisTitle" data-toggle="modal" data-target="#addTake">${t.take }</a> 
+							<input type="hidden" class="returnDate" value="${t.returnDate }">
+							<input type="hidden" class="takePrice" value="${t.takePrice }">	
+							<input type="hidden" class="bookNo" value="${t.bookNo }">						
 						</td>
 					</tr>
 					</c:forEach>
@@ -99,7 +102,7 @@
 <!-- 대여누르면 나오는 모달 창 -->
 <div class="modal" id="addTake">
 	<div class="modal-dialog">
-		<form action="${contextPath}/" method="post">
+		<form action="${contextPath}/book" method="post">
 			<div class="modal-content">
 				
 				<!-- Modal Header -->
@@ -122,16 +125,19 @@
 						<table class="table">
 							<tr>
 								<th>책제목</th>
-								<th>대여기간</th>
+								<th>반납일시</th>
 								<th>대여료</th>
 							</tr>
-							<c:forEach>
-							<tr>
+				
+							<tr class="bookName">
+								<td class="a"></td>
 								<td></td>
 								<td></td>
-								<td></td>
+								
 							</tr>
-							</c:forEach>
+							<tr>
+								<td colspan="3">위 책을 대여하시겠습니까?</td>			 
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -173,6 +179,25 @@ $(function(){
 			.submit();
 
 	});	//페이징처리
+	
+	
+	
+	$('.thisTitle').on('click',function(){
 
+		let bookName = $(this).attr('href');
+		let takePrice = $('.takePrice').val();
+		let returnDate = $('.returnDate').val();
+		console.log(bookName);
+		console.log(takePrice);
+		console.log(returnDate);
+		$('.bookName').find('td .a').append(bookName)
+					.next('td').append(returnDate)
+					.next('td').append(takePrice)
+					.submit();
+		
+	})
+		
+		
+	
 })
 </script>

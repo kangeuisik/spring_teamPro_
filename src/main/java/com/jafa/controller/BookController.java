@@ -8,10 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jafa.domain.Criteria;
 import com.jafa.domain.Pagination;
+import com.jafa.domain.Bookshop.BookVO;
 import com.jafa.repository.BookRepository;
 import com.jafa.repository.CategoryRepository;
 
@@ -59,12 +61,21 @@ public class BookController {
 	
 	//====================================대여=============================================//
 	
+	//대여현황
 	@GetMapping("/takeList")
 	public String takeList(@ModelAttribute("cri") Criteria criteria,
 			Model model) {
 		model.addAttribute("takeList", bookRepository.getTakeList(criteria))
 		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
 		return "book/takeList"; 
-		
 	}
+	
+	//대여 신청처리
+	@PostMapping("/take")
+	public String requestTake(BookVO vo) {
+		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
+		bookRepository.requestTake(vo);
+		return "";
+	}
+
 }

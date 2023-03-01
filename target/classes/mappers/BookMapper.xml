@@ -102,11 +102,11 @@
 		<select id="getTakeList" resultType="bookVO">
 		<![CDATA[
 		select 
-			rn, bookNo, cate_id, bookName, author, publisher, take, takePrice
+			rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
 		from
 		(
 		    select 
-		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice
+		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
 		    from 
 		        book_table
 		    where rownum <= #{maxRow}
@@ -117,4 +117,8 @@
 		where rn > #{minRow}
 		]]> 
 	</select>
+	
+	<update id="requestTake">
+		update book_table set take ='신청대기' where bookNo=#{bookNo}
+	</update>
 </mapper>

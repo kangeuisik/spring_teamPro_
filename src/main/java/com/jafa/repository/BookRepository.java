@@ -21,4 +21,6 @@ public interface BookRepository {
 //--------------------------대여-------------------//
 	
 	List<BookVO> getTakeList(Criteria criteria);
+	//신청받으면 take컬럼 업데이트 시키기
+	void requestTake(BookVO vo);
 }
