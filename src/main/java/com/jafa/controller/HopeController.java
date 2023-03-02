@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jafa.domain.Criteria;
 import com.jafa.domain.HopeVO;
 import com.jafa.domain.Pagination;
+import com.jafa.repository.BookRepository;
 import com.jafa.repository.HopeRepository;
 
 //책 대여 및 신청 
@@ -23,6 +24,8 @@ public class HopeController {
 
 	@Autowired
 	HopeRepository hopeRepository;
+	@Autowired
+	BookRepository bookRepository;
 	
 	//비치희망도서 신청현황
 	@GetMapping(value = {"/requestList"})
@@ -46,13 +49,19 @@ public class HopeController {
 		//return을 현황페이지로 했으나 신청이 처리되었을ㄸㅐ 데이터는 추가 되고 페이지이동이 안됨
 		return "hope/requestList";
 	}
+	
 	//결과전송폼(관리자페이지)
 	@GetMapping("/requestMaster") 
 	public String master(@ModelAttribute("cri") Criteria criteria, Model model) {
+		//희망도서신청관리
 		model.addAttribute("requestMaster", hopeRepository.getRequestMaster(criteria))
 		.addAttribute("p", new Pagination(criteria, hopeRepository.getTotalCount(criteria)));
+		//대여관리
+		model.addAttribute("takeList",bookRepository.takeWaitList(criteria))
+		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
 		return "hope/requestMaster";
 	}
+	
 	//결과전송처리(관리자페이지)
 	@PostMapping("/requestResult")
 	public String sendResult(Model model,HopeVO vo,

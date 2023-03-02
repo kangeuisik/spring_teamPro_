@@ -91,14 +91,10 @@
 					publisher like '%'||#{keyword}||'%'
 				</when>			
 			</choose>
-		</trim>
-		<!-- 
-		<if test="tid!=null and tid!=''">
-			and tid = #{tid}
-		</if>
-		 -->		
+		</trim>	
 	</sql>
 	
+<!-- 대여현황보기-->
 		<select id="getTakeList" resultType="bookVO">
 		<![CDATA[
 		select 
@@ -118,7 +114,30 @@
 		]]> 
 	</select>
 	
+	<!-- 고객이 대여신청했을때 '신청대기'로 없데이트 -->
 	<update id="requestTake">
-		update book_table set take ='신청대기' where bookNo=#{bookNo}
+		update book_table set take ='신청대기' where bookName=#{bookName}
 	</update>
+	
+	<!-- ===========대여 '신청대기'자만 열람(관리자 페이지) -->
+	<select id="takeWaitList" resultType="BookVO">
+		<![CDATA[
+		select 
+		    rn, bookNo, bookName, author, publisher, take, takePrice, returnDate, takeDate
+		from
+		(
+		    select 
+		        /*+ index_desc(book_table primary_bookNo) */
+		       rownum as rn, bookNo, bookName, author, publisher, take, takePrice, returnDate, takeDate
+		    from 
+		        book_table
+		    where rownum <= #{maxRow}
+		]]>
+			<include refid="takeCondition"/>
+		<![CDATA[ 
+		) 
+		where rn > #{minRow} and take ='신청대기'
+		]]> 
+	</select>
+	
 </mapper>

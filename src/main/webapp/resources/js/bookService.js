@@ -19,7 +19,6 @@ let bookService = {
 				console.log("page : "+map.p.criteria.page);
 				console.log("perPageNum : "+map.p.criteria.perPageNum);
 				console.log("cate_id : "+map.p.criteria.cate_id);
-				console.log("subCate_id : "+map.p.criteria.subCate_id);
 				console.log("startPage : "+map.p.startPage);
 				console.log("endPage : "+map.p.endPage);
 				console.log("tempEndPage : "+map.p.tempEndPage);

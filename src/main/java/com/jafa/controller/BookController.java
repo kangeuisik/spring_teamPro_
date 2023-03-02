@@ -3,13 +3,18 @@ package com.jafa.controller;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jafa.domain.Criteria;
 import com.jafa.domain.Pagination;
@@ -28,7 +33,7 @@ public class BookController {
 	private ServletContext application;
 	
 	@Autowired
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
 
 	// 도서 홈
 	@GetMapping("/home")
@@ -72,10 +77,25 @@ public class BookController {
 	
 	//대여 신청처리
 	@PostMapping("/take")
-	public String requestTake(BookVO vo) {
+	@ResponseBody
+	public ResponseEntity<String> requestTake(@RequestBody BookVO bookVO) {
 		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
-		bookRepository.requestTake(vo);
-		return "";
+		
+		System.out.println("오나? : "+bookVO);
+		String bookName = bookVO.getBookName();
+		bookRepository.requestTake(bookName);
+		return new ResponseEntity<String>("test",HttpStatus.OK);
 	}
+	
 
+
+//	@PostMapping("/take")
+//	public String requestTake(BookVO vo,
+//			@RequestParam(value = "bookName", required = false) String bookName) {
+//		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
+//		System.out.println(bookName);
+//		System.out.println(vo);
+//		bookRepository.requestTake(bookName);
+//		return "book/takeList";
+//	}
 }

@@ -97,4 +97,13 @@
 		where rn > #{minRow} and result ='승인대기'
 		]]> 
 	</select>
+	
+	
+	
+
+	
+	
+	
+	
+	
 </mapper>

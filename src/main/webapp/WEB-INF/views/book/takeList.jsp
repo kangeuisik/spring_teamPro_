@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="../layout/header.jsp" %>
+    <script src="${contextPath }/resources/js/takeList.js">
+
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,10 +73,11 @@
 						<td>${t.author }</td>
 						<td>${t.publisher }</td>
 						<td>
-							<a href="${t.bookName }" class="btn btn-info thisTitle" data-toggle="modal" data-target="#addTake">${t.take }</a> 
+							<a href="${t.bookName }" class="${t.take =='대여'? 'btn btn-info':
+															t.take =='신청대기'? 'btn btn-warning':''} thisTitle" data-toggle="modal" data-target="#addTake">${t.take }</a> 
 							<input type="hidden" class="returnDate" value="${t.returnDate }">
 							<input type="hidden" class="takePrice" value="${t.takePrice }">	
-							<input type="hidden" class="bookNo" value="${t.bookNo }">						
+							<input type="hidden" name="bookNo" value="${t.bookNo }">						
 						</td>
 					</tr>
 					</c:forEach>
@@ -102,7 +106,7 @@
 <!-- 대여누르면 나오는 모달 창 -->
 <div class="modal" id="addTake">
 	<div class="modal-dialog">
-		<form action="${contextPath}/book" method="post">
+		<form> <!-- action="${contextPath}/book/take" method="post" -->
 			<div class="modal-content">
 				
 				<!-- Modal Header -->
@@ -128,13 +132,7 @@
 								<th>반납일시</th>
 								<th>대여료</th>
 							</tr>
-				
-							<tr class="bookName">
-								<td class="a"></td>
-								<td></td>
-								<td></td>
-								
-							</tr>
+							<tr class="bookName"></tr>
 							<tr>
 								<td colspan="3">위 책을 대여하시겠습니까?</td>			 
 							</tr>
@@ -145,7 +143,7 @@
 				<!-- Modal footer -->
 				<div class="modal-footer">
 					
-					<button class="btn btn-primary">대여신청하기</button>
+					<button type="button" class="btn btn-primary takeRequest">대여신청하기</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 				</div>
 				
@@ -158,46 +156,5 @@
 </html>
 <%@ include file="../layout/footer.jsp" %>
 <script>
-$(function(){
-	let typeValue = getSearchParam('type');
-	let keywordValue = getSearchParam('keyword');
 
-	//페이징처리
-	$('.pagination a').on('click',function(e){
-		e.preventDefault();
-		let pageForm = $('<form>');
-		pageForm.empty();
-		
-		pageForm.attr('method','get')
-			.attr('action',`${contextPath}/hope/requestList`)
-			.append(getInputHiddenTag('page',$(this).attr('href')))
-		if(typeValue !=null && keywordValue != null){
-			pageForm.append(getInputHiddenTag('type',typeValue))
-				.append(getInputHiddenTag('keyword',keywordValue))
-		}
-		pageForm.appendTo('body')
-			.submit();
-
-	});	//페이징처리
-	
-	
-	
-	$('.thisTitle').on('click',function(){
-
-		let bookName = $(this).attr('href');
-		let takePrice = $('.takePrice').val();
-		let returnDate = $('.returnDate').val();
-		console.log(bookName);
-		console.log(takePrice);
-		console.log(returnDate);
-		$('.bookName').find('td .a').append(bookName)
-					.next('td').append(returnDate)
-					.next('td').append(takePrice)
-					.submit();
-		
-	})
-		
-		
-	
-})
 </script>
