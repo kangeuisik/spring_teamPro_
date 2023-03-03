@@ -31,4 +31,5 @@ public class BookVO {
 	private int takePrice; //대여금액
 	private Date takeDate; //대여일자
 	private Date returnDate; //반납일자
+	private String reason; // 거절시 사유
 }

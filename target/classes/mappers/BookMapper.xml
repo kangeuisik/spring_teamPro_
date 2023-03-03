@@ -89,6 +89,9 @@
 				</when>
 				<when test="type=='PS'.toString()">
 					publisher like '%'||#{keyword}||'%'
+				</when>
+				<when test="type=='TR'.toString()">
+					take like '%'||#{keyword}||'%'
 				</when>			
 			</choose>
 		</trim>	
@@ -98,11 +101,11 @@
 		<select id="getTakeList" resultType="bookVO">
 		<![CDATA[
 		select 
-			rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
+			rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate,reason
 		from
 		(
 		    select 
-		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
+		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate, reason
 		    from 
 		        book_table
 		    where rownum <= #{maxRow}
@@ -120,15 +123,15 @@
 	</update>
 	
 	<!-- ===========대여 '신청대기'자만 열람(관리자 페이지) -->
-	<select id="takeWaitList" resultType="BookVO">
+	<select id="takeMaster" resultType="BookVO">
 		<![CDATA[
 		select 
-		    rn, bookNo, bookName, author, publisher, take, takePrice, returnDate, takeDate
+		   rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
 		from
 		(
 		    select 
-		        /*+ index_desc(book_table primary_bookNo) */
-		       rownum as rn, bookNo, bookName, author, publisher, take, takePrice, returnDate, takeDate
+		       
+		       rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
 		    from 
 		        book_table
 		    where rownum <= #{maxRow}
@@ -139,5 +142,12 @@
 		where rn > #{minRow} and take ='신청대기'
 		]]> 
 	</select>
-	
+	<!-- 대여승인 -->
+	<update id="yesUpdate">
+		update book_table set take ='대여중' where bookName=#{bookName}
+	</update>
+	<!-- 대여 거절 및 사유 -->
+	<update id="noUpdate">
+		update book_table set take ='거절',reason=#{reason} where bookName=#{bookName}
+	</update>
 </mapper>

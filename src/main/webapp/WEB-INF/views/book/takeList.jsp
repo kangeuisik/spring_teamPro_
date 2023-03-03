@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="../layout/header.jsp" %>
-    <script src="${contextPath }/resources/js/takeList.js">
-
-</script>
+    <%@include file="modal.jsp" %>
+    <script src="${contextPath }/resources/js/takeList.js"></script>
+    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +31,6 @@
 				<li class="list-group-item">
 					<a href="${contextPath }/book/takeList">도서대여 현황</a>
 				</li>
-				<li class="list-group-item">
-					<a href="${contextPath }/book/#">도서대여 신청하기</a>
-				</li>
 			</ul>
 		</div>
 		<div class="col-9">
@@ -42,7 +40,8 @@
 						<option>선택해주세요</option>
 						<option value="BN" ${cri.type == 'BN' ? 'selected':''}>책제목</option>
 						<option value="AT" ${cri.type == 'AT' ? 'selected':''}>저자</option>
-						<option value="PS" ${cri.type == 'PS' ? 'selected':''}>출판사</option>			
+						<option value="PS" ${cri.type == 'PS' ? 'selected':''}>출판사</option>	
+						<option value="TR" ${cri.type == 'TR' ? 'selected':''}>대여상태</option>		
 					</select>
 					<div class="form-group mr-2">
 						<input type="search" class="form-control" name="keyword" value="${cri.keyword}">
@@ -74,7 +73,11 @@
 						<td>${t.publisher }</td>
 						<td>
 							<a href="${t.bookName }" class="${t.take =='대여'? 'btn btn-info':
-															t.take =='신청대기'? 'btn btn-warning':''} thisTitle" data-toggle="modal" data-target="#addTake">${t.take }</a> 
+															t.take =='신청대기'? 'btn btn-warning':
+															t.take =='대여중'? 'btn btn-success':
+															t.take =='거절'? 'btn btn-danger':''} thisTitle" 
+															data-target="#addTake" id="${t.take }" title="${t.reason }" target="${t.returnDate }">${t.take }</a>
+							<input type="hidden" class="take" id="take" value="${t.take }"> 
 							<input type="hidden" class="returnDate" value="${t.returnDate }">
 							<input type="hidden" class="takePrice" value="${t.takePrice }">	
 							<input type="hidden" name="bookNo" value="${t.bookNo }">						
@@ -82,79 +85,36 @@
 					</tr>
 					</c:forEach>
 				</table>	
-			<ul class="pagination">
-				<c:if test="${p.prev}">
-					<li class="page-item">
-						<a class="page-link" href="${p.startPage-1}">이전</a>
-					</li>
-				</c:if>
-				<c:forEach begin="${p.startPage }" end="${p.endPage}" var="pageNum">
-					<li class="page-item ${cri.page == pageNum ? 'active':''}">
-						<a class="page-link" href="${pageNum}">${pageNum}</a>
-					</li>		
-				</c:forEach>
-				<c:if test="${p.next}">
-					<li class="page-item">
-						<a class="page-link" href="${p.endPage+1 }">다음</a>
-					</li>		
-				</c:if>
-			</ul>					
+				<ul class="pagination">
+					<c:if test="${p.prev}">
+						<li class="page-item">
+							<a class="page-link" href="${p.startPage-1}">이전</a>
+						</li>
+					</c:if>
+					<c:forEach begin="${p.startPage }" end="${p.endPage}" var="pageNum">
+						<li class="page-item ${cri.page == pageNum ? 'active':''}">
+							<a class="page-link" href="${pageNum}">${pageNum}</a>
+						</li>		
+					</c:forEach>
+					<c:if test="${p.next}">
+						<li class="page-item">
+							<a class="page-link" href="${p.endPage+1 }">다음</a>
+						</li>		
+					</c:if>
+				</ul>					
 			</div>
 		</div>	
 	</div>
 </div>
-<!-- 대여누르면 나오는 모달 창 -->
-<div class="modal" id="addTake">
-	<div class="modal-dialog">
-		<form> <!-- action="${contextPath}/book/take" method="post" -->
-			<div class="modal-content">
-				
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">대여 신청하기</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<!-- Modal body -->
-				<div class="modal-body">
-					<div class="form-group">
-						<ul class="list">
-							<h4>--대여시 알아야할 부분--</h4>
-						</ul>
-						<ul>
-							<li>기본 대여기간은 7일</li>
-							<li>대여금액은 기본대여기간을 기준으로 1000원</li>
-							<li>반납기한 초과시 3일초과시 과금 1000원추가 부과</li>
-							<li>최초 책 대여시 대여료 납부</li>
-						</ul>
-						<table class="table">
-							<tr>
-								<th>책제목</th>
-								<th>반납일시</th>
-								<th>대여료</th>
-							</tr>
-							<tr class="bookName"></tr>
-							<tr>
-								<td colspan="3">위 책을 대여하시겠습니까?</td>			 
-							</tr>
-						</table>
-					</div>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					
-					<button type="button" class="btn btn-primary takeRequest">대여신청하기</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-				</div>
-				
-			</div>
-			<!-- modal-content -->
-		</form>
-	</div>
-</div>
+
+
+
+
 </body>
 </html>
 <%@ include file="../layout/footer.jsp" %>
 <script>
+
+
 
 </script>

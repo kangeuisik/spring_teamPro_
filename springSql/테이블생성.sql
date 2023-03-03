@@ -56,7 +56,7 @@ select * from book_subCategory;
 -- book 테이블 cascade constraint
 drop table book_table ;
 create table book_table(
-    bookNo NUMBER(10) PRIMARY KEY, -- 책 번호
+    bookNo NUMBER(10), -- 책 번호
     cate_id VARCHAR2(1000) , -- 카테고리, 외래키
     subCate_id VARCHAR2(1000), -- 하위 카테고리, 외래키
     bookName VARCHAR2(1000) NOT NULL, -- 책 제목
@@ -64,11 +64,13 @@ create table book_table(
     publisher VARCHAR2(1000),  -- 출판사
     bookImage VARCHAR2(1000), -- 상품 이미지
     price NUMBER(10), -- 판매가격
-    take varchar (300), -- 대여
+    take varchar (300), -- 대여상태
     takePrice int not null, --대여금액
     takeDate DATE DEFAULT sysdate, -- 대여일자
     returnDate DATE DEFAULT sysdate+7, -- 반납일자
     regDate DATE DEFAULT sysdate, -- 상품 등록일
+    reason varchar(500), --승인 거절시 사유
+     constraint primary_bookNo primary key(bookNo),
     foreign key(cate_id) references book_category(cate_id),
     foreign key(subcate_id) references book_subCategory(subCate_id)
     on delete cascade
@@ -82,3 +84,19 @@ select * from book_table;
 
 
 commit;
+
+		select 
+			rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
+		from
+		(
+		    select 
+		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
+		    from 
+		        book_table
+		    where rownum <= 10
+    ) 
+		where rn > 1 and take ='신청대기';
+        
+		select 
+		    bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate,reason
+		from book_table where take ='거절';

@@ -23,9 +23,9 @@ import com.jafa.repository.HopeRepository;
 public class HopeController {
 
 	@Autowired
-	HopeRepository hopeRepository;
+	private HopeRepository hopeRepository;
 	@Autowired
-	BookRepository bookRepository;
+	private	BookRepository bookRepository;
 	
 	//비치희망도서 신청현황
 	@GetMapping(value = {"/requestList"})
@@ -56,9 +56,6 @@ public class HopeController {
 		//희망도서신청관리
 		model.addAttribute("requestMaster", hopeRepository.getRequestMaster(criteria))
 		.addAttribute("p", new Pagination(criteria, hopeRepository.getTotalCount(criteria)));
-		//대여관리
-		model.addAttribute("takeList",bookRepository.takeWaitList(criteria))
-		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
 		return "hope/requestMaster";
 	}
 	

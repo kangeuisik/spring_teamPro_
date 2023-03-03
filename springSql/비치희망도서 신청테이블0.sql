@@ -35,3 +35,15 @@ commit;
 
 select *from hopeBook where result='½ÂÀÎ´ë±â' and mname = 'È«±æµ¿';
 
+		select 
+		    rno,mNum,mid,mname,nbookName,nbookWriter,npublisher,result,etc
+		from
+		(
+		    select 
+		        /*+ index_desc(hopeBook primary_rno) */
+		       rownum as rn, rno,mNum,mid,mname,nbookName,nbookWriter,npublisher,result,etc
+		    from 
+		        hopeBook
+		    where rownum <= 10
+        ) 
+		where rn > 1 and result ='½ÂÀÎ´ë±â';

@@ -80,22 +80,42 @@ public class BookController {
 	@ResponseBody
 	public ResponseEntity<String> requestTake(@RequestBody BookVO bookVO) {
 		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
-		
-		System.out.println("오나? : "+bookVO);
+	
 		String bookName = bookVO.getBookName();
 		bookRepository.requestTake(bookName);
 		return new ResponseEntity<String>("test",HttpStatus.OK);
 	}
+	//대여신청한것을 관리자가 처리
+	@GetMapping("/takeMaster")
+	public String takeMaster(@ModelAttribute("cri") Criteria criteria,
+			Model model) {
+		model.addAttribute("takeMaster",bookRepository.takeMaster(criteria))
+		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
+		return "book/takeMaster";
+	}
 	
+	//'신청대기'->대여중으로 업데이트
+	@PostMapping("/yesUpdate")
+	@ResponseBody
+	public ResponseEntity<String> resultYesUpdate(@RequestBody BookVO bookN) {
+
+		String bookName = bookN.getBookName();
+		bookRepository.yesUpdate(bookName);
+		return new ResponseEntity<String>("yesTest",HttpStatus.OK);			
+
+	}		
+	//'신청대기'->거절로 업데이트
+	@PostMapping("/noUpdate")
+	@ResponseBody
+	public ResponseEntity<String> resultNoUpdate(@RequestBody BookVO bookR) {
+		String bookName = bookR.getBookName();
+		String reason = bookR.getReason();
+		System.out.println(bookName);
+		System.out.println(reason);
+		bookRepository.noUpdate(bookName,reason);
+		return new ResponseEntity<String>("noTest",HttpStatus.OK);
+	}
 
 
-//	@PostMapping("/take")
-//	public String requestTake(BookVO vo,
-//			@RequestParam(value = "bookName", required = false) String bookName) {
-//		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
-//		System.out.println(bookName);
-//		System.out.println(vo);
-//		bookRepository.requestTake(bookName);
-//		return "book/takeList";
-//	}
+
 }

@@ -84,11 +84,10 @@
 	        대여 및 신청란
 	      </a>
 	      <div class="dropdown-menu">
-	        <a class="dropdown-item" href="${contextPath }/hope/requestMaster">대여/도서신청 관리</a>
 	        <a class="dropdown-item" href="${contextPath }/hope/requestList">비치 희망도서 신청현황</a>
 	        <a class="dropdown-item" href="${contextPath }/hope/requestForm">비치 희망도서 신청하기</a>
-	        <a class="dropdown-item" href="${contextPath }/book/takeList">도서 대여하기</a>
-	        <a class="dropdown-item" href="#">도서 대여 신청하기</a>
+	        <a class="dropdown-item" href="${contextPath }/book/takeList">도서 대여현황 및 신청</a>
+	        <a class="dropdown-item" href="${contextPath }/hope/requestMaster">대여/도서신청 관리(관리자)</a>
 	        
 
 	      </div>
