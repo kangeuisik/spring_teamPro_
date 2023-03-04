@@ -43,7 +43,7 @@
 	  <div class=" col-3 ">
 	 	 <h5>
 	 	 	<a href="#" class="badge badge-light">로그인하기</a>
-	 	 	<a href="#" class="badge badge-light">회원가입하기</a>
+	 	 	<a href="${contextPath }/member/join" class="badge badge-light">회원가입하기</a>
 	 	 </h5>
 	  	
 	  </div>
