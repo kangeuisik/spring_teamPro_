@@ -61,7 +61,8 @@
 							<td>${t.returnDate }</td>
 							<td>대여신청아이디</td>
 							<td>
-								<a href="${t.bookName }" class="btn btn-info takeResult" data-toggle="modal" data-target="#result">${t.take }</a>
+								<a href="${t.bookName }" class="btn btn-info takeResult" 
+								id="${t.returnDate }" title="${t.takePrice }" data-target="#result">${t.take }</a>
 								<input type="hidden" class="returnDate" value="${t.returnDate }">
 								<input type="hidden" class="takePrice" value="${t.takePrice }">	
 								<input type="hidden" name="bookNo" value="${t.bookNo }">
@@ -99,8 +100,8 @@
 				
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">대여</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">대여승인&거절</h4>
+					<button type="button" class="close" >&times;</button>
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
@@ -109,10 +110,7 @@
 							<h4>대여 책 정보</h4>
 						</ul>
 						<ul>
-							<li>기본 대여기간은 7일</li>
-							<li>대여금액은 기본대여기간을 기준으로 1000원</li>
-							<li>반납기한 초과시 3일초과시 과금 1000원추가 부과</li>
-							<li>최초 책 대여시 대여료 납부</li>
+							<li>해당도서를 대여 승인하시겠습니까?</li>
 						</ul>
 						<table class="table">
 							<tr>
@@ -136,9 +134,9 @@
 				<!-- Modal footer -->
 				<div class="modal-footer">
 					
-					<button type="button" class="btn btn-primary modal yesResult">승인</button>
-					<button type="button" class="btn btn-warning modal noResult">거절</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary yesResult">승인</button>
+					<button type="button" class="btn btn-warning noResult">거절</button>
+					<button type="button" class="btn btn-danger modal_close">취소</button>
 				</div>
 				
 			</div>
@@ -181,7 +179,14 @@ $(function(){
 	$('.takeResult').on('click',function(e){
 		e.preventDefault();
 		let bookName = $(this).attr('href'); // 이름 가져오고
-		
+		let returnDate = $(this).attr('id'); //반납날짜 가져오고
+		let takePrice = $(this).attr('title'); // 대여료 가져오고
+		//날짜 포매팅
+		$(document).ready(function () {
+	        var date = new Date();
+	        returnDate.text(moment(date).format('YYYY-MM-DD'));
+	        console.log(returnDate)
+	    });
 		// td태그 만드는 거
 		let content = '<td>'+bookName+'</td>';
 		content += '<td>'+returnDate+'</td>';
@@ -189,16 +194,9 @@ $(function(){
 		console.log(content);
 		$('.bookName').html(content) // tr안에 추가
 					.submit();
+		$('#result').show();
 		// 신청하기 버튼			
-		$('.takeRequest').on('click',function(){
-			let bookVO = {
-				bookName : bookName, 
-				takePrice : takePrice		
-			}
-			console.log(bookVO);
-			takeService.requestTake(bookVO);
-			
-		})
+	
 		//신청시 모달 내부에서 승인값 컨드롤러로 보내기	
 		$('.yesResult').on('click',function(){
 			let bookN ={

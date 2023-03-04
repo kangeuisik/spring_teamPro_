@@ -21,7 +21,6 @@ let takeResultService={
 		});
 	
 	},
-	
 	//거절 및 사유
 	noResult : function(bookR){
 		console.log("책제목 "+bookR.bookName)
@@ -42,5 +41,7 @@ let takeResultService={
 			}
 		});
 	}
+	
+
 
 };

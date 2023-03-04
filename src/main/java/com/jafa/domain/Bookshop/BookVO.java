@@ -2,6 +2,8 @@ package com.jafa.domain.Bookshop;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +32,7 @@ public class BookVO {
 	private String take; //대여
 	private int takePrice; //대여금액
 	private Date takeDate; //대여일자
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private Date returnDate; //반납일자
 	private String reason; // 거절시 사유
 }
