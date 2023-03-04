@@ -4,6 +4,21 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jafa.repository.BookRepository">
 
+	<select id="bookList" resultType="bookVO">
+		select * from book_table 
+	</select>
+
+
+	<insert id="addBook">
+		insert all
+		<foreach collection="bookList" item="con">
+			into book_table(bookNo, cate_id, subCate_id, bookName, author, publisher, price, bookImage)
+			values(bookNo_seq, #{con.cate_id}, #{con.subCate_id}, #{con.bookName}, #{con.author},
+			#{con.publisher}, #{con.price}, #{con.bookImage})
+		</foreach>
+		select * from dual
+	</insert>
+
 	<sql id="condition">
 		<trim prefix="and">
 			<choose>
@@ -75,6 +90,18 @@
 		<result property="count" column="count" />
 	</resultMap>
 	
+	<!-- 도서상품 등록 -->
+	<insert id="insertBook" useGeneratedKeys="true"
+		keyColumn="bookNo" keyProperty="bookNo">
+		insert into book_table(bookNo, cate_id, subCate_id, bookName, author, publisher, price, bookImage)
+		values(bookNo_seq.NEXTVAL, #{cate_id}, #{subCate_id}, #{bookName},
+		#{author}, #{publisher},#{price}, #{bookImage, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 도서상품 삭제 -->
+	<delete id="deleteBook">
+		delete from book_table where bookNo=#{bookNo}
+	</delete>
 	<!--
 	 ================대여===================== 
 	 -->

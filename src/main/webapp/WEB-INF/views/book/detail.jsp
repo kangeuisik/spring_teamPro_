@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../layout/header.jsp"%>
 <%@include file="../layout/bookMenu.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:formatDate var="regDate" pattern = "yyyy-MM-dd" value="${detail.regDate}"/>
 <script src="${contextPath}/resources/js/bookService.js"></script>
 
 <style>
@@ -15,19 +17,19 @@
 	<div class="jumbotron title">
 		<h1>상세 페이지</h1>
 		<input type="hidden" name="cate_id" value="${cri.cate_id}"> <input type="hidden" name="subCate_id" value="${cri.subCate_id}">
-		카테 : ${cri.cate_id}<br> 
-		서브 카테 : ${cri.subCate_id}<br>
-		타입 : ${cri.type}<br>
-		키워드 : ${cri.keyword}<br>
+		크리 : ${cri}
+		크리테리아 : ${criteria}
 	</div>
 	
 	<!-- Content -->
-	<form id="detailForm">
+	<form id="bookDetailForm">
 	<!-- 회원아이디 -->
 	<input type="hidden" name="memberId" value="kim"> <!-- value="${auth.id}" -->
 		<div class="row">
 			<!-- BookImage -->
-			<div id="ImgArea" class="col-6">이미지</div>
+			<div id="ImgArea" class="col-6">
+				<img src="${contextPath}/bookImgDisplay?category=${detail.cate_id}/${detail.subCate_id}&no=${detail.bookNo}&imageFileName=${detail.bookImage}">
+			</div>
 			<div class="col-6">
 				<!-- BookInfo -->
 				<table class="table">
@@ -46,7 +48,11 @@
 						</tr>
 						<tr>
 							<th>카테고리</th>
-							<td colspan="3">${detail.cate_id}/ subcate_id</td>
+							<td colspan="3">
+								<input type="hidden" name="cate_id" value="${detail.cate_id}">
+								<input type="hidden" name="subCate_id" value="${detail.subCate_id}">
+								${detail.cate_id} / ${detail.subCate_id}
+								</td>
 						</tr>
 						<tr>
 							<th>책번호</th>
@@ -55,7 +61,7 @@
 								${detail.bookNo}
 							</td>
 							<th>등록일</th>
-							<td>${detail.regDate}</td>
+							<td>${regDate}</td>
 						</tr>
 						<tr>
 							<th>가격</th>
@@ -85,16 +91,20 @@
 				</div>
 	
 				<!-- Button -->
-				<div class="text-center my-2">
-					<div class="text-center">
-						<button type="button" class="btn btn-danger my-2 buy">바로구매</button>
-						<button type="button" class="btn btn-primary addCart">장바구니담기</button>
+				<div>
+					<div>
+						<div class="row">
+							<button type="button" class="btn btn-danger my-2 buy">바로구매</button>
+						</div>
+						<div class="row">
+							<button type="button" class="btn btn-primary addCart">장바구니담기</button>
+						</div>
 					</div>
-					<div class="text-center my-2">
+					<div>
 						<div>
-							<button type="button" class="btn btn-success modBtn">수정</button>
-							<button type="button" class="btn btn-secondary delBtn">삭제</button>
-							<a href="${contextPath}/book/list/${detail.cate_id}/${detail.subCate_id}" class="btn btn-info">목록</a>
+							<button type="button" class="btn btn-info toBookList">목록</button>
+							<button type="button" class="btn btn-success modifyBookBtn">수정</button>
+							<button type="button" class="btn btn-secondary delBookBtn">삭제</button>
 						</div>
 						<div class="modifyMod">
 							<button type="button" class="btn btn-primary modify">수정완료</button>

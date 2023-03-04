@@ -20,7 +20,14 @@ public interface BookRepository {
 	BookVO findByBookNo(int bookNo);
 
 	List<Map<String, Integer>> getCount();
+	// 게시물(책) 등록
+	void insertBook(BookVO vo);
+
+	// 도서상품 삭제
+	void deleteBook(int bookNo);
 	
+	List<BookVO> bookList();
+	void addBook(@Param("bookList") List<BookVO> bookList);
 //--------------------------대여-------------------//
 	//대여현황 목록
 	List<BookVO> getTakeList(Criteria criteria);

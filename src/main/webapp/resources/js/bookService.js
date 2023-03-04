@@ -4,10 +4,7 @@ let bookService = {
 	
 	// 목록
 	list : function(criteria) {
-		console.log('크리 카테 : '+criteria.cate_id);
-		console.log('크리 서브카테 : '+criteria.subCate_id);
-		console.log('크리 타입 : '+criteria.type);
-		console.log('크리 키워드 : '+criteria.keyword);
+		
 		$.ajax({
 			type : 'post',
 			url : `${contextPath}/sample/list`,
@@ -15,23 +12,9 @@ let bookService = {
 			data : JSON.stringify(criteria),
 			
 			success : function(map) {
-				/*
-				console.log("page : "+map.p.criteria.page);
-				console.log("perPageNum : "+map.p.criteria.perPageNum);
-				console.log("cate_id : "+map.p.criteria.cate_id);
-				console.log("startPage : "+map.p.startPage);
-				console.log("endPage : "+map.p.endPage);
-				console.log("tempEndPage : "+map.p.tempEndPage);
-				console.log("displayPageNum : "+map.p.displayPageNum);
-				console.log("prev : " + map.p.prev);
-				console.log("next : "+ map.p.next);
-				*/
-				// alert(map.bookList);
-				let bookList = map.bookList;
 				let p = map.p;
-				bookListRender(bookList);
-				paginationRender(p);
-				
+				bookListRender(map);
+				paginationRender(p); // Pagination [criteria(page=1, perPageNum=10)]
 			},
 			error : function() {
 				alert('목록 조회 실패');			
@@ -41,29 +24,51 @@ let bookService = {
 	
 };
 
-function bookListRender(bookList) {
+// 북 리스트 렌더링
+function bookListRender(map) {
 	let output = ``;
-	for(let b of bookList) {
-		output +=
-		`<tr>
-			<td>${b.bookNo}</td>
-			<td>이미지</td>
+	for(let b of map.bookList) {
+		output +=`
+		<tr>
+			<td>${b.bookNo}</td>`;
+			if(b.bookImage == '' || b.bookImage == null) {
+				output +=
+				`<td>이미지X</td>`;
+			} else {
+				output +=
+				`<td><img src="${contextPath}/bookImgDisplay?category=${b.cate_id}/${b.subCate_id}&no=${b.bookNo}&imageFileName=${b.bookImage}" width="40px" height="40px"></td>`;
+			}
+		output +=`
 			<td>${b.cate_id} / ${b.subCate_id}</td>
-			<td><a href="${contextPath}/book/detail?bookNo=${b.bookNo}">${b.bookName}</a></td>
+			<td><a id="${b.bookNo}" href="${contextPath}/book/detail?bookNo=${b.bookNo}">${b.bookName}</a></td>
 			<td>${b.author}</td>
 			<td>${b.publisher}</td>
 			<td>${b.price}</td>
 			<td>${b.regDate}</td>
-		</tr>`
+		</tr>`;
 	}
 	$('.bookList tbody').html(output);
 	
-	
+	/*
+	// 제목 클릭하면 상세 페이지로 이동
+	$('.bookList a').on('click', function(e){
+		e.preventDefault();
+		let bookNodata = $(this).attr('id');
+		
+		let form = $('<form>');
+		form.attr('method','post')
+			.attr('action',`${contextPath}/book/detail?bookNo=`+bookNodata)
+			.appendTo('body')
+			.submit();
+	})
+	*/
 	
 }
 
+// 페이지네이션 렌더링
 function paginationRender(p) {
-	let output =`<ul class="pagination">`;
+	let output =`
+		<ul class="pagination bookPagination">`;
 		if(p.prev) {
 			output +=
 			`<li class="page-item">
@@ -83,70 +88,70 @@ function paginationRender(p) {
 			</li>`;
 		}
 	output +=`</ul>`;
-	$('#pagination').html(output);
+	$('#bookPagination').html(output);
 	
 	// 페이지이동
-		$('.pagination a').on('click',function(e){
+	$('.bookPagination a').on('click',function(e){
 		e.preventDefault();
-		let typeValue = $('select[name="type"]').val(); // id가 type인 셀렉트태그 선택된 값 가져오기
-		let keywordValue = $('input[name="keyword"]').val(); // name속성이 keyword인 input태그 값 가져오기
-				
+		let typeValue = $('select[name="type"]').val(); // 셀렉트태그에서 선택된 값
+		let keywordValue = $('input[name="keyword"]').val(); // input[name="keyword"]태그 값
+		
+		// 검색한 내용, 카테고리 유지한 채로 페이지 이동 할 때 필요한거
 		let criteria = {
-			page : $(this).attr('href'),
+			page : $(this).attr('href'), // 클릭한 페이지 번호
 			cate_id : p.criteria.cate_id,
 			subCate_id : p.criteria.subCate_id,
 			type : typeValue,
 			keyword : keywordValue
 		}
-		
-		$.ajax({
-			type : 'post',
-			url : `${contextPath}/sample/list`,
-			contentType : 'application/json;charset=utf-8',
-			data : JSON.stringify(criteria),
-			
-			success : function(map) {
-				let bookList = map.bookList;
-				let p = map.p;
-				bookListRender(bookList);
-				paginationRender(p);
-			},
-			error : function() {
-				alert('목록 조회 실패');			
-			}
-		}); // ajax end
+		bookService.list(criteria); // 해당 페이지 리스트 새로 불러옴
 	});
 	 
 }
 
 
 $(function() {
-
-	let cate_id = $('#cate option:selected').val(); // id가 cate인 셀렉트태그 선택된 값 가져오기
-	let subCate_id = $('#subCate option:selected').val(); // id가 subCate인 셀렉트태그 선택된 값 가져오기
-	let typeValue = $('select[name="type"]').val(); // id가 type인 셀렉트태그 선택된 값 가져오기
-	let keywordValue = $('input[name="keyword"]').val(); // name속성이 keyword인 input태그 값 가져오기
+	
+	// 처음 리스트 불러 올 때 필요한거 -> 뭔가 중복되는게 많은데 줄이는 방법 없나??
+	let cate_id = $('#cate option:selected').val(); // 셀렉트태그에서 선택된 값
+	let subCate_id = $('#subCate option:selected').val();  // 셀렉트태그에서 선택된 값
+	let typeValue = $('select[name="type"]').val(); // // 셀렉트태그에서 선택된 값
+	let keywordValue = $('input[name="keyword"]').val(); // input[name="keyword"]태그 값
 
 	let criteria = {
 		cate_id : cate_id,
 		subCate_id : subCate_id,
-		type : typeValue,
-		keyword : keywordValue
+		type : typeValue, // 검색 할 때 필요한거
+		keyword : keywordValue // 검색 할 때 필요한거
 	}
-	
 	bookService.list(criteria);
 	
 	// 검색
-	$('.searchForm button').on('click',function(){
-		let searchForm = $('.searchForm');
-		if(cate_id != '' && subCate_id != '') { // 둘다 선택
+	$('.searchBookForm button').on('click',function(){
+		/* 카테고리 바꾸고 검색 했을 때*/
+		let cate_id = $('#cate option:selected').val(); // // 셀렉트태그에서 선택된 값
+		let subCate_id = $('#subCate option:selected').val(); // 셀렉트태그에서 선택된 값
+		
+		let searchForm = $('.searchBookForm');
+		if(cate_id != '' && subCate_id != '') { // 대분류, 소분류 둘 다 선택
 			searchForm.attr('action',`${contextPath}/book/list/${cate_id}/${subCate_id}`)
-		}
-		else { // 하나만 선택
+		} else { // 대분류만 선택
 			searchForm.attr('action',`${contextPath}/book/list/${cate_id}`)
 		}
 		searchForm.appendTo('body')
 			.submit();
 	});
+	
+	// 목록버튼 클릭 이벤트
+	$('.toBookList').on('click', function(){
+		alert('목록버튼 클릭');
+		/*
+		let bookDetailForm = $('#bookDetailForm'); // ${contextPath}/book/list/${cate_id}/${subCate_id}
+		bookDetailForm.attr('method','post')
+			.attr('action',`${contextPath}/book/list`)
+			.appendTo('body')
+			.submit();
+		*/
+	})
 	
 });

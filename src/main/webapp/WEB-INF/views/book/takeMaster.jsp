@@ -69,7 +69,6 @@
 						</tr>
 						</c:forEach>
 					</table>
-					<button class="btn btn-info mb-3">결과전송</button>
 				</form>
 				<ul class="pagination">
 					<c:if test="${p.prev}">

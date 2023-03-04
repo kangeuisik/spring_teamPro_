@@ -26,12 +26,6 @@ public class SampleController {
 	@Autowired
 	private BookRepository bookRepository;
 	
-	@PostMapping("/take")
-	public String requestTake(@RequestBody BookVO bookVO) {
-		System.out.println("오나? :"+ bookVO);
-		bookRepository.requestTake(bookVO.getBookName());
-		return "success"; 
-	}
 	
 	
 	@PostMapping("/list") // @GetMapping에 @RequestBody붙이니까 안됨
@@ -44,10 +38,5 @@ public class SampleController {
 		return map; 
 	}
 	
-//	@PostMapping("/list") // @GetMapping에 @RequestBody붙이니까 안됨
-//	public List<BookVO> list(@RequestBody Criteria criteria) {
-//		System.out.println("크리테리아 : "+criteria);
-//		List<BookVO> bookList = bookRepository.selectByCategory(criteria);
-//		return bookList; 
-//	}
+
 }

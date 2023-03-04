@@ -57,7 +57,7 @@ public class BookController {
 		return "book/list";
 	}
 	
-	//글상세보기
+	//글상세보기 왜 post로 바꿨는지
 	@GetMapping("/detail")
 	public String detail(Model model, int bookNo) {
 		model.addAttribute("detail",bookRepository.findByBookNo(bookNo));

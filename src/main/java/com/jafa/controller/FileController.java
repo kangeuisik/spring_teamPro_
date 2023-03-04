@@ -49,4 +49,21 @@ public class FileController {
 		headers.add("Content-Disposition", "attach;fileName="+downloadName);
 		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
 	}
+	
+	private static final String REPO_PATH = "c:/file01_spring/";
+	private static final String bookServicePathName = "book/";
+	
+	@GetMapping("/bookImgDisplay")
+	@ResponseBody
+	public ResponseEntity<byte[]> bookImgDisplay(String category, int no, String imageFileName) throws IOException{
+		File file = new File(REPO_PATH+bookServicePathName+category+"/"+no, imageFileName);
+		if(!file.exists()) {
+			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+		}
+		HttpHeaders headers = new HttpHeaders();
+		FileNameMap fileNameMap = URLConnection.getFileNameMap();
+		headers.add("Content-Type", fileNameMap.getContentTypeFor(imageFileName));
+		return new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file),headers,HttpStatus.OK);
+	}
+	
 }

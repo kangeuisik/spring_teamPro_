@@ -1,0 +1,23 @@
+create table mem_tbl(
+    mno number(10) primary key, 
+    id varchar(20) not null,  
+    pwd varchar(20) not null,
+    name varchar(20) not null,
+    age int,
+    gender varchar(20),
+    email varchar(50),
+    profile varchar(50)
+);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+drop table mem_tbl;
+
+DROP SEQUENCE mno;
+
+create sequence mno;
+
+INSERT INTO mem_tbl(mno,id,pwd,name,
+age,gender,email,profile)
+VALUES(mno.NEXTVAL,'kim3','2345', '김유신3',20,
+'남자','kim@example.com', null);
+
+select * from mem_tbl;
