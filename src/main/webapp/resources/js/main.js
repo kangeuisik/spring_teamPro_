@@ -9,3 +9,8 @@ function getInputHiddenTag(name, value){
 function getSearchParam(key){
 	return new URLSearchParams(location.search).get(key);
 }
+
+$(function(){
+	//3개로 제한..
+
+})

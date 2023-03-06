@@ -64,9 +64,11 @@
 				</tr>
 				<c:choose>
 					<c:when test="${empty list}">
-						<tr><td colspan="5">
-							<b>게시물이 존재하지 않습니다.</b>
-						</td></tr>
+						<tr>
+							<td colspan="5">
+								<b>게시물이 존재하지 않습니다.</b>
+							</td>
+						</tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="b" items="${list}">

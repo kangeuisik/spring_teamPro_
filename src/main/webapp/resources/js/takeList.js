@@ -20,9 +20,9 @@ let takeService ={
 			error : function() {
 				alert('실패');			
 			}
-		});
+		})
 		
-	},
+	}
 };
 
 $(function(){

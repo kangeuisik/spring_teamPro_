@@ -19,6 +19,10 @@ import lombok.ToString;
 @Builder
 public class BookVO {
     
+	// join써서 카테고리테이블에서 cate_name 불러오는 것 보다 book테이블에 cate_name까지 넣는게 더 편해보이는데....흠
+	private BookCategory bookCategory; 
+	private BookSubCategory bookSubCategory;
+    
     private int bookNo; // 책 번호
 	private String cate_id; // 카테
 	private String subCate_id; // 서브카테
@@ -27,6 +31,7 @@ public class BookVO {
 	private String publisher; // 출판사
 	private String bookImage; // 이미지
 	private int price; // 가격
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date regDate; // 등록일
 	
 	private String take; //대여

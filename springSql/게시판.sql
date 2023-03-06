@@ -74,4 +74,6 @@ select*from board_category;
 
 
 ---------
-select * from board where tid='notice';
+select top from board where tid='notice' order by bno desc ;
+SELECT * FROM board
+WHERE tid='notice' and ROWNUM < 4 order by bno desc;

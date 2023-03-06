@@ -12,7 +12,7 @@ BEGIN
     FOR i IN 1 .. 84
     LOOP
         INSERT INTO book_table(bookNo, cate_id, subCate_id, bookName, author, publisher,take,takePrice)
-        VALUES (bookNo_seq.NEXTVAL,'information_technology','database', '이것이 오라클이다-'||I, '우재남', '한빛미디어','신청대기',1000); 
+        VALUES (bookNo_seq.NEXTVAL,'information_technology','database', '이것이 오라클이다-'||I, '우재남', '한빛미디어','대여',1000); 
     END LOOP; 
     
     -- IT / 웹사이트 

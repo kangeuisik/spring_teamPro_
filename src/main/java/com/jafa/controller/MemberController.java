@@ -18,6 +18,7 @@ import com.jafa.domain.MemberVO;
 import com.jafa.repository.MemberRepository;
 
 @Controller
+@RequestMapping("/member")
 public class MemberController {
 	
 	@Autowired
@@ -101,7 +102,7 @@ public class MemberController {
 			rttr.addFlashAttribute("msgType", "성공 메세지");
 			rttr.addFlashAttribute("msg", "로그인 되었습니다.");
 			session.setAttribute("mvo", mvo); 	// ${!empty mvo}
-			return "redirect:/";	// 메인
+			return "redirect:/main";	// 메인
 		} else {			// 로그인 실패
 			rttr.addFlashAttribute("msgType", "실패 메세지");
 			rttr.addFlashAttribute("msg", "다시 로그인 하세요.");

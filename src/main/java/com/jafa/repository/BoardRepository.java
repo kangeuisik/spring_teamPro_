@@ -20,6 +20,10 @@ public interface BoardRepository {
 	void remove(Long bno);
 	//수정
 	void modify(BoardVO vo);
-	void modifyOnlyContent(BoardVO vo);	
+	void modifyOnlyContent(BoardVO vo);
+	//메인화면에 쓸 공지,리뷰,기타게시판 3개만 호출
+	List<BoardVO> mainNotice();
+	List<BoardVO> mainReview();
+	List<BoardVO> mainEtc();	
 	
 }

@@ -50,25 +50,32 @@
 							<th>상태</th>
 							<th>대여인</th>
 						</tr>
-						<c:forEach items="${ takeMaster}" var="t">
-						<tr>
-							<td>${t.bookNo }</td>
-							<td>${t.bookName }</td>
-							<td>${t.author }</td>
-							<td>${t.publisher }</td>
-							<td>${t.takePrice }</td>
-							<td>${t.takeDate }</td>
-							<td>${t.returnDate }</td>
-							<td>대여신청아이디</td>
-							<td>
-								<a href="${t.bookName }" class="btn btn-info takeResult" 
-								id="${t.returnDate }" title="${t.takePrice }" data-target="#result">${t.take }</a>
-								<input type="hidden" class="returnDate" value="${t.returnDate }">
-								<input type="hidden" class="takePrice" value="${t.takePrice }">	
-								<input type="hidden" name="bookNo" value="${t.bookNo }">
-							</td>
-						</tr>
-						</c:forEach>
+						<c:if test="${empty takeMaster }==">
+							<tr>
+								<td colspan="9"> <h3>신청현황이 없습니다.</h3> </td>
+							</tr>
+						</c:if>
+						<c:if test="${not empty takeMaster }">
+							<c:forEach items="${ takeMaster}" var="t">
+							<tr>
+								<td>${t.bookNo }</td>
+								<td>${t.bookName }</td>
+								<td>${t.author }</td>
+								<td>${t.publisher }</td>
+								<td>${t.takePrice }</td>
+								<td>${t.takeDate }</td>
+								<td>${t.returnDate }</td>
+								<td>대여신청아이디</td>
+								<td>
+									<a href="${t.bookName }" class="btn btn-info takeResult" 
+									id="${t.returnDate }" title="${t.takePrice }" data-target="#result">${t.take }</a>
+									<input type="hidden" class="returnDate" value="${t.returnDate }">
+									<input type="hidden" class="takePrice" value="${t.takePrice }">	
+									<input type="hidden" name="bookNo" value="${t.bookNo }">
+								</td>
+							</tr>
+							</c:forEach>
+						</c:if>
 					</table>
 				</form>
 				<ul class="pagination">
@@ -181,12 +188,7 @@ $(function(){
 		let bookName = $(this).attr('href'); // 이름 가져오고
 		let returnDate = $(this).attr('id'); //반납날짜 가져오고
 		let takePrice = $(this).attr('title'); // 대여료 가져오고
-		//날짜 포매팅
-		$(document).ready(function () {
-	        var date = new Date();
-	        returnDate.text(moment(date).format('YYYY-MM-DD'));
-	        console.log(returnDate)
-	    });
+
 		// td태그 만드는 거
 		let content = '<td>'+bookName+'</td>';
 		content += '<td>'+returnDate+'</td>';
@@ -217,6 +219,8 @@ $(function(){
 		})
 	});
 
-	
+	$('.close, .modal_close').click(function(){
+		$('.modal').hide();
+	})
 });
 </script>

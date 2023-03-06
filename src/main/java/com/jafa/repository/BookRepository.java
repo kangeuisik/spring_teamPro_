@@ -12,16 +12,21 @@ public interface BookRepository {
 
 	// 게시물(책) 목록
 	List<BookVO> selectByCategory(Criteria criteria);
+	// 가장 최근에 등록한 도서 목록 최대(5개)
+	List<BookVO> latestList();
 
 	// 총 게시물(책) 수
 	int getTotalCount(Criteria criteria);
 
 	// 게시물(책) 상세
 	BookVO findByBookNo(int bookNo);
-
-	List<Map<String, Integer>> getCount();
+	List<Map<String, Integer>> bookOfCate();
+	List<Map<String, Integer>> bookOfSubCate();
 	// 게시물(책) 등록
 	void insertBook(BookVO vo);
+	
+	// 도서 상품 수정
+	void updateBook(BookVO vo);
 
 	// 도서상품 삭제
 	void deleteBook(int bookNo);

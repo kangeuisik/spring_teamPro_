@@ -88,5 +88,24 @@
 		where rn > #{minRow}
 		]]> 
 	</select>
-  
+	
+  <!-- 메인 미리보기글(공지) 3개만 -->
+	<select id="mainNotice" resultType="boardVO">
+		<![CDATA[
+		select bno, tid, title, content, writer, writeDate
+		from board where tid='notice' and ROWNUM < 4 order by bno desc
+		]]>
+	</select>
+  	<select id="mainReview" resultType="boardVO">
+		<![CDATA[
+		select bno, tid, title, content, writer, writeDate
+		from board where tid='review' and ROWNUM < 4 order by bno desc
+		]]>
+	</select>
+	<select id="mainEtc" resultType="boardVO">
+		<![CDATA[
+		select bno, tid, title, content, writer, writeDate
+		from board where tid='etc' and ROWNUM < 4 order by bno desc
+		]]>
+	</select>
 </mapper>

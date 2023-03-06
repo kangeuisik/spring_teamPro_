@@ -4,6 +4,7 @@ create table book_category(
     cate_id varchar2(1000) PRIMARY KEY, -- 카테고리 아이디
     cate_name varchar2(1000) -- 카테고리 이름
 );
+select *from book_category;
 -- 시퀀스 생성
 drop sequence cate_seq;
 create sequence cate_seq;
@@ -93,7 +94,7 @@ commit;
 		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
 		    from 
 		        book_table
-		    where rownum <= 10
+		    where rownum <= 200
     ) 
 		where rn > 1 and take ='신청대기';
         

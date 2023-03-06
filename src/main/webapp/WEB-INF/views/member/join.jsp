@@ -1,75 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <title>join</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
-  	$(document).ready(function(){
-  		if(${!empty msgType}){
-   			$("#messageType").attr("class", "modal-content panel-warning");    
-  			$("#myMessage").modal("show");
-  		}
-  	});
-  	
-  	function registerCheck() {
-		var id=$("#id").val();
-		$.ajax({
-			url : "${contextPath}/registerCheck",
-			type : "get",
-			data : {"id" : id},
-			success : function(result) {
-				// 중복유무 출력(result=1 : 사용할수있는 아이디, 0 : 사용할수없는 아이디)
-				if(result==1){
-	    			  $("#checkMessage").html("사용할 수 있는 아이디입니다.");
-	    			  $("#checkType").attr("class", "modal-content panel-success");
-	    		} else {
-	    			  $("#checkMessage").html("사용할 수 없는 아이디입니다."); 
-	    			  $("#checkType").attr("class", "modal-content panel-warning");
-	    		}
-	    		$("#myModal").modal("show");
-			},
-			error : function() { alert("error")}
-		});
-	}
-  	
-  	function passwordCheck(){
-    	var password1=$("#password1").val();
-    	var password2=$("#password2").val();
-    	if(password1 != password2){
-    		$("#passMessage").html("비밀번호가 서로 일치하지 않습니다.");
-    	}else{
-    		$("#passMessage").html("");
-    		$("#pwd").val(password1);
-    	}   	
-    }
-  	
-  	function goInsert() {
-		var age=$("#age").val();
-		if(age==null || age=="" || age==0){
-			alert("나이를 입력하세요");
-			return false;
-		}
-		document.frm.submit();	// 전송
-	}
-  </script>	
-</head>
-<body>
+<%@include file="../layout/header.jsp" %>
 <div class="container">
-<jsp:include page="../layout/header.jsp" /> 
-  <h2>Sign up</h2>
-  <div class="panel panel-default">
+   <div class="container topMenu mt-3 mb-3 ">
+      <div>
+         <h2>Sign up</h2>
+      </div>
+       <div class="panel panel-default">
     <div class="panel-heading">회원가입</div>
     <div class="panel-body">
-     <form name="frm" action="${contextPath}/register" method="post">
+     <form name="frm" action="${contextPath}/member/register" method="post">
       <input type="hidden" id="pwd" name="pwd" value=""/>
       <table class="table table-bordered" style="text-align: center; border: 1px solid; #dddddd;">
        <tr>
@@ -114,7 +55,10 @@
        </tr>
        <tr>
         <td colspan="3" style="text-align: left;">
-         <span id="passMessage" style="color: red"></span><input type="button" class="btn btn-primary btn-sm pull-right" value="등록" onclick="goInsert()"/> 
+         <span id="passMessage" style="color: red"></span>
+            <div style='width:80px;float: right;'>
+               <input type="button" class="btn btn-primary" value="등록" onclick="goInsert()"/>
+            </div>
         </td>
        </tr>
       </table>
@@ -122,7 +66,7 @@
     </div>
     <!-- 다이얼로그창(모달) -->
     <div id="myModal" class="modal fade" role="dialog">
-  		<div class="modal-dialog">
+        <div class="modal-dialog">
 
     <!-- Modal content-->
     <div id="checkType" class="modal-content panel-info">
@@ -137,11 +81,11 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-  		</div>
-	</div>
-	<!-- 실패 메세지 출력(modal) -->
-	<div id="myMessage" class="modal fade" role="dialog">
-  		<div class="modal-dialog">
+        </div>
+   </div>
+   <!-- 실패 메세지 출력(modal) -->
+   <div id="myMessage" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
     <!-- Modal content-->
     <div id="messageType" class="modal-content panel-info">
@@ -156,12 +100,60 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-  		</div>
-	</div>
-	
+        </div>
+   </div>
+   
     <div class="panel-footer"></div>
   </div>
 </div>
+<%@include file="../layout/footer.jsp" %>
 
-</body>
-</html>
+<script type="text/javascript">
+   $(document).ready(function(){
+      if(${!empty msgType}){
+            $("#messageType").attr("class", "modal-content panel-warning");    
+           $("#myMessage").modal("show");
+        }
+     });
+     
+     function registerCheck() {
+      var id=$("#id").val();
+      $.ajax({
+         url : "${contextPath}/member/registerCheck",
+         type : "get",
+         data : {"id" : id},
+         success : function(result) {
+            // 중복유무 출력(result=1 : 사용할수있는 아이디, 0 : 사용할수없는 아이디)
+            if(result==1){
+                  $("#checkMessage").html("사용할 수 있는 아이디입니다.");
+                  $("#checkType").attr("class", "modal-content panel-success");
+             } else {
+                  $("#checkMessage").html("사용할 수 없는 아이디입니다."); 
+                  $("#checkType").attr("class", "modal-content panel-warning");
+             }
+             $("#myModal").modal("show");
+         },
+         error : function() { alert("error")}
+      });
+   }
+     
+     function passwordCheck(){
+       var password1=$("#password1").val();
+       var password2=$("#password2").val();
+       if(password1 != password2){
+          $("#passMessage").html("비밀번호가 서로 일치하지 않습니다.");
+       }else{
+          $("#passMessage").html("");
+          $("#pwd").val(password1);
+       }      
+    }
+     
+     function goInsert() {
+      var age=$("#age").val();
+      if(age==null || age=="" || age==0){
+         alert("나이를 입력하세요");
+         return false;
+      }
+      document.frm.submit();   // 전송
+   }
+</script>

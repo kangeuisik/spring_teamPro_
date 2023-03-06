@@ -46,20 +46,23 @@ public class BookController {
 	// 게시물(책) 목록
 	// @PathVariable(required = false) 
 	// required속성 false로 지정하면 : 값이 없을 때 null로 받음
-	@GetMapping(value = { "/list/{cate_id}", "/list/{cate_id}/{subCate_id}" })
+	@GetMapping(value = {"/list", "/list/{cate_id}", "/list/{cate_id}/{subCate_id}" })
 	public String list(@ModelAttribute("cri") Criteria criteria,
 			@PathVariable(required = false) String cate_id,
 			@PathVariable(required = false) String subCate_id) {
 		criteria.setCate_id(cate_id);
 		criteria.setSubCate_id(subCate_id);
-//		model.addAttribute("bookList", bookRepository.selectByCategory(criteria)).addAttribute("p",
-//				new Pagination(criteria, bookRepository.getTotalCount(criteria)));
 		return "book/list";
 	}
 	
-	//글상세보기 왜 post로 바꿨는지
-	@GetMapping("/detail")
-	public String detail(Model model, int bookNo) {
+	//글상세보기 왜 post로 바꿨는지 -> get요청시 에러...int bookNo가 null??
+	/* Request processing failed; nested exception is java.lang.IllegalStateException: Optional int parameter
+	 * 'bookNo' is present but cannot be translated into a null 
+	 * value due to being declared as a primitive type. 
+	 * Consider declaring it as object wrapper for the corresponding primitive type. */
+	@PostMapping("/detail")
+	public String detail(@ModelAttribute("cri") Criteria criteria, Model model, int bookNo) {
+		System.out.println("디테일 크리테리아~ : "+ criteria);
 		model.addAttribute("detail",bookRepository.findByBookNo(bookNo));
 		return "book/detail";
 	}
