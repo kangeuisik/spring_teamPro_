@@ -4,7 +4,7 @@
 <%@include file="../layout/adminMenu.jsp"%>
 <%@include file="registerBookForm_modal.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="${contextPath}/resources/js/adminService.js"></script>
+
 
 <!-- Content -->
 <div class="container admin">

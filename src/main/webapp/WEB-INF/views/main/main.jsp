@@ -78,7 +78,7 @@
 					</div>
 				</div>	
 			<div>
-				<p>강의식</p>
+				<h2>빈 공간</h2>
 			</div>
 			</div>
 		</div>	<!-- col-8 end-->
