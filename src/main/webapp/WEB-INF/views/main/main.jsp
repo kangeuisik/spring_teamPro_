@@ -28,6 +28,14 @@
 			      <img src="${contextPath }/resources/images/광고3.png" alt="New York" width="1100" height="500">
 			    </div>
 			  </div>
+			  <!-- 게시물링크로 불러오고 싶을때
+			    불러올 때 ?fileName=${b.bno}/${b.imageFileName}" 이렇게 되면
+				-> (경로, 이미지이름)  ex) (file01_spring, no/이미지이름) 이 되어서 못찾음.
+				
+				컨트롤러에서 get요청이면 파라미터 이름 imageimageFileName ?뒤에랑 일치해야함.
+				?fileName (x) 
+				?imageimageFileName (o)
+			   -->
 			  
 			  <!-- Left and right controls -->
 			  <a class="carousel-control-prev" href="#demo" data-slide="prev">
@@ -57,7 +65,7 @@
 						</a> 
 					</div>
 					<div class="d-inline-flex p-3 bg-light text-dark">
-						<a href="#" class="contatiner text-center">
+						<a href="${contextPath }/member/join" class="contatiner text-center">
 							<img src="${contextPath }/resources/images/회원가입 바로가기.png" class="rounded-circle" alt="" width="100" height="80"><br>
 							회원가입하기
 						</a> 
@@ -126,10 +134,9 @@
 			    <div id="menu2" class="container tab-pane fade"><br>
 			      <table class="table">
 			      	<tr>
-			      		<td>
-			      		<a href="#">기타게시글제목</a>
-			      		</td>
-			      		<td>작성자</td>
+			      		<th>제목</th>
+			      		<th>작성자</th>
+			      	</tr>
 			      	</tr>
 			      	<c:forEach items="${threeEtc }" var="e">
 					   	<tr>

@@ -1,5 +1,7 @@
 package com.jafa.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.jafa.domain.MemberVO;
@@ -13,4 +15,6 @@ public interface MemberRepository {
 	public int update(MemberVO mvo);		// 수정
 	public MemberVO getMember(String id);	
 	public void profileUpdate(MemberVO mvo);
+	
+	List<MemberVO> getMemberInfo();
 }

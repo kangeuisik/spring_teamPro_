@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class FileController {
 	@GetMapping("/imgDisplay")
 	@ResponseBody
-	public ResponseEntity<byte[]> imgDisplay(String imageFileName) throws IOException{
-		File file = new File("c:/file01_spring", imageFileName);
+	public ResponseEntity<byte[]> imgDisplay(String imageFileName,String bno) throws IOException{
+		File file = new File("c:/file01_spring/"+bno, imageFileName);
 		if(!file.exists()) {
 			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 		}

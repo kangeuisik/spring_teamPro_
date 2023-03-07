@@ -12,7 +12,16 @@ public interface CartRepository {
 	// 장바구니 담기
 	void addCart(CartVO vo);
 	
+	// 장바구니 상품 삭제
+	void delCart(int cartNo);
+	
+	// 장바구니 상품 수량 변경
+	void updateCart(CartVO vo);
+	
 	// 장바구니에 담긴 상품 갯수
 	int getCount(String id);
+	
+
+	
 
 }

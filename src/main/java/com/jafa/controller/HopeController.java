@@ -54,6 +54,7 @@ public class HopeController {
 	@GetMapping("/requestMaster") 
 	public String master(@ModelAttribute("cri") Criteria criteria, Model model) {
 		//희망도서신청관리
+		//criteria.setType("TR");
 		model.addAttribute("requestMaster", hopeRepository.getRequestMaster(criteria))
 		.addAttribute("p", new Pagination(criteria, hopeRepository.getTotalCount(criteria)));
 		return "hope/requestMaster";

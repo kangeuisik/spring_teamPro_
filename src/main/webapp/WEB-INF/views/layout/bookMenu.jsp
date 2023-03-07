@@ -37,7 +37,7 @@
 		  <a class="carousel-control-next" href="#demo" data-slide="next">
 		    <span class="carousel-control-next-icon"></span>
 		  </a>
-		</div>
+		</div><!-- 광고 end -->
 		
 	<!-- 하위배너 -->
 		<div class="bookMenu mt-3 mb-3">
@@ -59,7 +59,7 @@
 					</c:forEach>
 				</nav>
 			</div>
-		</div>
+		</div> <!-- bookmenu end -->
 	</div>
 
 

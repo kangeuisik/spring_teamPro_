@@ -1,4 +1,4 @@
-console.log('bookService');
+console.log('북서비스');
 
 let bookService = {
 	
@@ -20,6 +20,23 @@ let bookService = {
 				alert('목록 조회 실패');			
 			}
 		}); // ajax end
+	},
+	
+	// 장바구니 담기
+	addCart : function(cartVO) {
+		$.ajax({
+			type : 'post',
+			url : `${contextPath}/sample/addCart`,
+			contentType : 'application/json;charset=utf-8',
+			data : JSON.stringify(cartVO),
+			
+			success : function(map) {
+				alert(map.message);
+			},
+			error : function() {
+				alert('실패')	;			
+			}
+		}); 
 	}
 	
 };
@@ -70,9 +87,9 @@ function bookListRender(map) {
 			<div>
 				<span>${b.bookCategory.cate_name} / ${b.bookSubCategory.subCate_name}</span><br>
 				<span><a id="${b.bookNo}" href="${contextPath}/book/detail?bookNo=${b.bookNo}">${b.bookName}</a></span><br>
-				<span>${b.author}</span>
-				<span>${b.publisher}</span><br>
-				<span>${b.price}</span><br>
+				<span>저자 : ${b.author}</span>
+				<span>출판사 : ${b.publisher}</span><br>
+				<span>가격 : ${b.price}</span><br>
 			</div>
 		</li>`;
 	}
@@ -230,7 +247,7 @@ $(function() {
 
 // =================================== 화면전환 ============================================	
 	
-	$('.bookList2').hide();
+	$('.bookList1').hide();
 	// 화면1
 	$('.view1').on('click', function(){
 		$('.bookList1').show();
@@ -273,6 +290,7 @@ $(function() {
 
 
 // ======================================상세페이지에서 쓰는 거 ==============================================	
+	
 	// 목록버튼 클릭 이벤트
 	$('.toBookList').on('click', function(){
 		let cate_id = $('input[name="cateInfo"]').val();
@@ -322,19 +340,14 @@ $(function() {
 		totalPriceObj.val(priceValue * count);
 	});
 	
-	let memberId = $('input[name="memberId"]').val();
-	let bookNo = $('input[name="bookNo"]').val();
 	// 장바구니 담기 버튼
 	$('.addCart').on('click', function() {
-		let form = $('<form/>')
-			form.attr('action',`${contextPath}/cart/addCart`)
-				.attr('method','post')
-				.append(getInputHiddenTag('id', $('input[name="memberId"]').val()))
-				.append(getInputHiddenTag('bookNo', $('input[name="bookNo"]').val()))
-				.append(getInputHiddenTag('amount', $('input[name="bookNo"]').val()))
-				.appendTo('body')
-				.submit();
-		alert('장바구니 담기!');
+		let cartVO = {
+			id : $('input[name="id"]').val(),
+			bookNo : $('input[name="bookNo"]').val(),
+			amount : amountObj.val()
+		}
+		bookService.addCart(cartVO);
 	});
 	
 });

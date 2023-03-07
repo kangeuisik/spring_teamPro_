@@ -36,3 +36,9 @@ li{list-style: none;}
 	height: 225px;
 	border: 1px solid #ececec;
 }
+.bookList2 ul li {
+	width: 185px;
+	height: 325px;
+	margin : 10px;
+	display: inline-block;
+}

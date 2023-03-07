@@ -21,7 +21,7 @@ let adminService = {
 		}); // ajax end
 	},
 	
-	// 번호로 조회
+	// 수정폼에 띄울 정보
 	detail : function(bookNo) {
 		$.ajax({
 			type : 'get',
@@ -30,79 +30,36 @@ let adminService = {
 			data : JSON.stringify(bookNo),
 			
 			success : function(map) { // 이거 맞나? 이렇게 하는거 아닌거 같은데...
-				console.log(map);
-				let detail = map.detail;
-				let cateList = map.cateList;
-				let subCateList = map.subCateList;
-				let output=`
-				<div class="row">
-					<input type="hidden" class="form-control bookNo" name="bookNo" value="${detail.bookNo}">
-					<div class="col-4" style="border: solid 1px;">
-						<div id="ImgArea" class="preview">
-							<img class="originImg" src="${contextPath}/bookImgDisplay?category=${detail.bookCategory.cate_id}/${detail.bookSubCategory.subCate_id}&no=${detail.bookNo}&imageFileName=${detail.bookImage}" width="300px" height="350px">
-						</div>
-					</div>
-					<div class="col-8">
-						<table class="table">
-							<tr>
-								<th>이미지</th>
-								<td colspan="3">
-									<input type="file" class="form-control attachFile" name="attachFile" value="${detail.bookImage}">
-								</td>
-							</tr>
-							<tr>
-								<th>책체목</th>
-								<td colspan="3"><input type="text" class="form-control" name="bookName" value="${detail.bookName}"></td>
-							</tr>
-							<tr>
-								<th>저자</th>
-								<td><input type="text" class="form-control" name="author" value="${detail.author}"></td>
-								<th>출판사</th>
-								<td><input type="text" class="form-control" name="publisher" value="${detail.publisher}"></td>
-							</tr>
-							<tr>
-								<th>대분류</th>
-								<td>
-									<select id="cate1" name="cate_id" class="form-control cate_id">
-										<option value="none"">===선택===</option>`;
-										for(let c of cateList) {
-											output+=`
-											<option value="${c.cate_id}" ${detail.bookCategory.cate_id == c.cate_id ? 'selected':''}>${c.cate_name}</option>`;
-										} output+=`		
-									</select>
-								</td>
-								<th>소분류</th>
-								<td>
-									<select id="cate2" name="subCate_id" class="form-control subCate_id">
-									<option id="none">===선택===</option>`;
-									for(let s of subCateList) {
-										output+=`
-										<option class="${s.cate_id}" value="${s.subCate_id}" ${detail.bookSubCategory.subCate_id == s.subCate_id ? 'selected':''}>${s.subCate_name}</option>`;
-									} output+=`			
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th>가격</th>
-								<td colspan="3"><input type="text" name="price" value="${detail.price}" class="form-control" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
-							</tr>
-						</table>
-					</div>
-				</div>`;
-				$('#modifyBookBookForm').find('.modal-body').html(output);
+				let detail = map.detail; // 책번호로 조회
+				let cateList = map.cateList; // 카테고리 목록
+				let subCateList = map.subCateList; // 서브카테고리 목록
+				
+				// input태그 선택
+				let originImgTag = $('.originImg'); // 이미지 미리보기
+				originImgTag.attr('src',`${contextPath}/bookImgDisplay?category=${detail.bookCategory.cate_id}/${detail.bookSubCategory.subCate_id}&no=${detail.bookNo}&imageFileName=${detail.bookImage}`);
+				let bookNoInput = $('input[name="bookNo"]'); // 책번호
+				let attachFileInput = $('input[name="attachFile"]'); // 파일폼
+				let bookNameInput = $('input[name="bookName"]'); // 책제목
+				let authorInput = $('input[name="author"]'); // 저자
+				let publisherInput = $('input[name="publisher"]'); // 출판사
+				let priceInput = $('input[name="price"]'); // 가격
+				
+				// 속성에 값 넣기
+				bookNoInput.val(`${detail.bookNo}`);
+				bookNameInput.val(`${detail.bookName}`);
+				authorInput.val(`${detail.author}`);
+				publisherInput.val(`${detail.publisher}`);
+				priceInput.val(`${detail.price}`);
+				$('.cate1').closest('td').find(`option[value="${detail.bookCategory.cate_id}"]`).prop("selected", true);
+				$('.cate2').closest('td').find(`option[value="${detail.bookSubCategory.subCate_id}"]`).prop("selected", true);
 				$('#modifyBookBookForm').modal('show');
+				
 			},
 			error : function() {
 				alert('상세정보 조회 실패');			
 			}
 		}); // ajax end
 	}
-	
-	/*
-	modify : function(vo) {
-		console.log(vo);		
-	}
-	*/
 	
 }
 
@@ -377,28 +334,60 @@ $(function(){
 	})
 
 // ===========================수정, 삭제 관련 =========================================
-	
+
 	// 수정완료하기 버튼
 	$('.modifyBookBtn').on('click', function(e){
-		/*
-		let vo = {
-			bookNo : $('input[name="bookNo"]').val(),
-			cate_id : $('select[name="cate_id"]').val(),
-			subCate_id : $('select[name="subCate_id"]').val(),
-			bookName : $('input[name="bookName"]').val(),
-			author : $('input[name="author"]').val(),
-			publisher : $('input[name="publisher"]').val(),
-			bookImage : $('input[name="attachFile"]').val(),
-			price : $('input[name="price"]').val()
-		}
-		adminService.modify(vo);
-		*/
 		e.preventDefault();
+		let bookNodata = $('input[name="bookNo"]');
+		bookNodata.attr('type', 'number');
 		$('.modifyBookForm').attr('action',`${contextPath}/admin/modifyBook`)
 			.attr('method','post')
 			.attr('enctype', 'multipart/form-data')
+			.append(bookNodata)
 			.appendTo('body')
 			.submit();
+	});
+	
+	// 수정폼에서 카테고리 변경 이벤트
+	$('.cate1').on('change', function(){
+		let selectedVal = $(this).val(); // 선택된 값
+		$(this).closest('tr').find('.cate2 option').each(function(index, item) {
+			if($(item).attr('class')==selectedVal){
+				$(item).show();
+				$(this).closest('tr').find('.cate2 option').eq(0).show();
+			} else {
+				$(item).hide();
+			}
+		});
+		$(this).closest('tr').find('.cate2 option').eq(0).prop("selected", true);
+	});
+	
+	//0306 수정
+	// 수정폼에서 수정할 이미지 미리보기
+	$('#modifyBookBookForm').find('input[type="file"]').on('change', function(){
+		if (this.files[0]) {
+			let reader = new FileReader(); // 파일읽기 객체
+			reader.onload = function(e) { // 파일을 읽으면 이벤트 발생
+				let value = e.target.result;
+				if (value.startsWith("data:image/")) { // 이미지 파일인 경우
+					let imgTag = '<img src="'+value+'" alt="다운로드 이미지" width="180px" height="220px">';
+					$('input[name="attachFile"').closest('td').find('.changeImg').html(imgTag);
+				} else { // 이미지 파일이 아닌경우
+					alert('이미지 파일만 등록하세요');
+					$('input[name="attachFile"').val('');
+					$('input[name="attachFile"').closest('td').find('.changeImg').html('');
+				}
+			}
+			reader.readAsDataURL(this.files[0]); // 파일 읽기 메소드 호출
+		}
+	});
+	
+	//0306 수정
+	// 수정폼 닫기 버튼 파일폼, 미리보기 초기화
+	$('.cancelModifyBtn').on('click', function(){
+		$('input[name="attachFile"').val(''); 
+		$('input[name="attachFile"').closest('td').find('.changeImg').html('');
+		$('#modifyBookBookForm').modal('hide');
 	});
 	
 })

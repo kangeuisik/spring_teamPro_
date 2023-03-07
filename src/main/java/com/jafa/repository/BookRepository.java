@@ -46,4 +46,5 @@ public interface BookRepository {
 	void yesUpdate(String bookName);
 	//대여를 거절하면 take컬럼 신청대기->거절로 업데이트하면서 거절사유까지 업데이트 하기
 	void noUpdate(@Param("bookName") String bookName,@Param("reason") String reason);
+	int getTakeTotalCount(Criteria criteria);
 }

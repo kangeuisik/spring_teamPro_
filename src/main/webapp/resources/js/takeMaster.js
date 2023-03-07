@@ -41,7 +41,5 @@ let takeResultService={
 			}
 		});
 	}
-	
-
 
 };

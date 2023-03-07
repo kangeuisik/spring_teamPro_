@@ -4,7 +4,7 @@
 <%@include file="../layout/adminMenu.jsp"%>
 <%@include file="registerBookForm_modal.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<script src="${contextPath}/resources/js/adminService.js"></script>
 
 <!-- Content -->
 <div class="container admin">
@@ -16,8 +16,8 @@
 	<button type="button" class="btn btn-primary addBook my-2">도서
 		등록</button>
 
-	<!-- 검색기능 -->
-	<div class="form-inline d-flex justify-content-between">
+	<!-- 검색기능 --> <!-- id,class cate, subCate -->
+	<div class="form-inline d-flex justify-content-between mb-3">
 		<form class="form-inline adminSearchBookForm">
 			<!-- 대분류 -->
 			<select id="cate" class="form-control mr-2 cate">
@@ -144,17 +144,83 @@
 	
 				<!-- Modal body -->
 				<div class="modal-body">
-					
+					<div class="row">
+						<!-- 책번호 -->
+						<input type="hidden" class="form-control bookNo" name="bookNo">
+						
+						<div class="col-4">
+							<div id="ImgArea" class="preview">
+								<!-- 원본이미지 -->
+								<img class="originImg" src="" width="300px" height="350px">
+							</div>
+						</div>
+						
+						<div class="col-8">
+							<table class="table">
+								<!-- 파일폼 -->
+								<tr>
+									<th>이미지</th>
+									<td colspan="3">
+										<input type="file" class="form-control attachFile" name="attachFile">
+										<div class="changeImg"></div>
+									</td>
+								</tr>
+								<!-- 책제목 -->
+								<tr>
+									<th>책체목</th>
+									<td colspan="3">
+										<input type="text" class="form-control" name="bookName">
+									</td>
+								</tr>
+								<!-- 저자 / 출판사 -->
+								<tr>
+									<th>저자</th>
+									<td><input type="text" class="form-control" name="author"></td>
+									<th>출판사</th>
+									<td><input type="text" class="form-control" name="publisher"></td>
+								</tr>
+								<!-- 카테고리 -->
+								<tr>
+									<th>대분류</th>
+									<td>
+										<select id="cate1" name="cate_id" class="form-control cate1">
+											<option value="none"">===선택하세요===</option>
+											<c:forEach items="${cateList}" var="c">
+												<option value="${c.cate_id}">${c.cate_name}</option>
+											</c:forEach>	
+										</select>
+									</td>
+									<th>소분류</th>
+									<td>
+										<select id="cate2" name="subCate_id" class="form-control cate2">
+											<option id="none">===선택하세요===</option>
+											<c:forEach items="${subCateList}" var="s">
+												<option class="${s.cate_id}" value="${s.subCate_id}" style="display: none;">${s.subCate_name}</option>
+											</c:forEach>		
+										</select>
+									</td>
+								</tr>
+								<!-- 가격 -->
+								<tr>
+									<th>가격</th>
+									<td colspan="3"><input type="text" name="price" class="form-control" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
+								</tr>
+							</table>
+						</div>
+						
+					</div>
 				</div>
 	
 				<!-- Modal footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary modifyBookBtn">수정하기</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary cancelModifyBtn">취소</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
+
 <%@include file="../layout/footer.jsp"%>
+

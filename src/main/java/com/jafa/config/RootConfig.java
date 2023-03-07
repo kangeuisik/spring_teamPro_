@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.jafa.domain.BoardVO;
 import com.jafa.domain.CartVO;
 import com.jafa.domain.HopeVO;
+import com.jafa.domain.MemberDTO;
 import com.jafa.domain.Bookshop.BookCategory;
 import com.jafa.domain.Bookshop.BookSubCategory;
 import com.jafa.domain.Bookshop.BookVO;
@@ -57,7 +58,7 @@ public class RootConfig {
 				 new PathMatchingResourcePatternResolver()
 				 .getResources("classpath:mappers/**/*Mapper.xml"));
 		 factory.setTypeAliases(BoardVO.class, HopeVO.class,
-				 BookVO.class,BookCategory.class,BookSubCategory.class,CartVO.class);
+				 BookVO.class,BookCategory.class,BookSubCategory.class,CartVO.class,MemberDTO.class);
 		return factory;
 	}
 	@Bean

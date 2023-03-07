@@ -48,10 +48,10 @@
 						<b>첨부파일이 없습니다.</b>
 					</c:if>
 					<c:if test="${not empty b.imageFileName and b.fileType eq 'IMAGE'}">
-						<img src="${contextPath}/imgDisplay?fileName=${b.bno}/${b.imageFileName}">
+						<img src="${contextPath}/imgDisplay?bno=${b.bno}&imageFileName=${b.imageFileName}">
 					</c:if>
 					<c:if test="${not empty b.imageFileName and b.fileType eq 'OTHER'}">
-						<a href="${contextPath}/download?fileName=${b.bno}/${b.imageFileName}">${b.imageFileName}</a> 
+						<a href="${contextPath}/download?bno=${b.bno}&imageFileName=${b.imageFileName}">${b.imageFileName}</a> 
 					</c:if>
 				</td>
 			</tr>

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +29,12 @@ public class MemberController {
 	@RequestMapping("/join")
 	public String memJoin() {
 		return "member/join";	// join.jsp
+	}
+	
+	@GetMapping("/memInfo")
+	public String memberInfo(Model model) {
+		model.addAttribute("memberInfo",memberRepository.getMemberInfo());
+		return "member/memInfo";
 	}
 	
 	@RequestMapping("/registerCheck")
@@ -89,7 +97,7 @@ public class MemberController {
 	}
 	
 	// 로그인 기능
-	@RequestMapping("login")
+	@RequestMapping("login") //세션 생성해서 로그인한 사용자가 이용할수 있게 
 	public String memLogin(MemberVO vo, RedirectAttributes rttr, HttpSession session) {
 		if(vo.getId() == null || vo.getId().equals("") ||
 		   vo.getPwd() == null || vo.getPwd().equals("")) {

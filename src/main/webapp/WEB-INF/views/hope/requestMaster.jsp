@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
+<%@include file="../layout/adminMenu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +32,7 @@
 		</div>
 		<div class="col-9">
 			<div >
-				<a href="${contextPath }/book/takeMaster" class="btn btn-info mb-3 mr-3">대여관리</a>
+				<a href="${contextPath }/book/takeMaster?type=TR&keyword=신청대기" class="btn btn-info mb-3 mr-3">대여관리</a>
 				<a href="${contextPath }/hope/requestMaster" class="btn btn-info mb-3 mr-3">신청관리</a>
 			</div>
 			<div>
@@ -63,7 +64,9 @@
 						</tr>
 						</c:forEach>
 					</table>
+					
 					<button class="btn btn-info mb-3">결과전송</button>
+				
 				</form>
 				<ul class="pagination">
 					<c:if test="${p.prev}">

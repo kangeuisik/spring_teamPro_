@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
+<%@include file="../layout/adminMenu.jsp" %>
 <script src="${contextPath }/resources/js/takeMaster.js">
+
 </script>
 <!DOCTYPE html>
 <html>
@@ -36,6 +38,26 @@
 				<a href="${contextPath }/book/takeMaster" class="btn btn-info mb-3 mr-3">대여관리</a>
 				<a href="${contextPath }/hope/requestMaster" class="btn btn-info mb-3 mr-3">신청관리</a>
 			</div>
+			<div class="my-3">
+				<form class="form-inline searchForm">
+					<select name="type" class="form-control mr-2 cate">
+						<option>선택해주세요</option>
+						<option value="BN" ${cri.type == 'BN' ? 'selected':''}>책제목</option>
+						<option value="AT" ${cri.type == 'AT' ? 'selected':''}>저자</option>
+						<option value="PS" ${cri.type == 'PS' ? 'selected':''}>출판사</option>	
+						<option value="TR" ${cri.type == 'TR' ? 'selected':''}>대여상태</option>		
+					</select>
+					<div class="form-group mr-2">
+						<input type="search" class="form-control" name="keyword" value="${cri.keyword}">
+					</div>
+					<div class="form-group mr-2">
+						<button class="btn btn-primary">검색</button>
+					</div>
+					<div class="form-group mr-2">
+						<a href="${contextPath}/book/takeList"  class="btn btn-info">새로고침</a>
+					</div>
+				</form>		
+			</div>
 			<div>
 				<form  action="${contextPath }/book/takeResult" method="post">
 					<table class="table">
@@ -47,8 +69,8 @@
 							<th>대여료</th>
 							<th>대여신청일</th>
 							<th>반납예정일</th>
-							<th>상태</th>
 							<th>대여인</th>
+							<th>상태</th>회원아이디 : ${mvo.id} 회원이름 : ${mvo.name}
 						</tr>
 						<c:if test="${empty takeMaster }==">
 							<tr>
@@ -65,7 +87,7 @@
 								<td>${t.takePrice }</td>
 								<td>${t.takeDate }</td>
 								<td>${t.returnDate }</td>
-								<td>대여신청아이디</td>
+								<td>${mvo.name}</td>
 								<td>
 									<a href="${t.bookName }" class="btn btn-info takeResult" 
 									id="${t.returnDate }" title="${t.takePrice }" data-target="#result">${t.take }</a>
@@ -77,6 +99,7 @@
 							</c:forEach>
 						</c:if>
 					</table>
+			
 				</form>
 				<ul class="pagination">
 					<c:if test="${p.prev}">

@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <c:set var="contextPath" value="${pageContext.request.contextPath }"></c:set>
+    <c:set var="mvo" value="${sessionScope.mvo}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 <title>Insert title here</title>
  <!--  <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -23,6 +25,11 @@
 <script src="${contextPath}/resources/js/bookService.js"></script>
 <script>
 	const contextPath = "${contextPath}"
+	
+	let mvo = {
+		id : "${mvo.id}",
+		name : "${mvo.name}"
+	};
 </script>
 <style type="text/css">
 .footer img{ 
@@ -91,15 +98,11 @@
 		   </div>
 		<!-- 메뉴얼 -->
 		 <div class="p-2">
-		    <li class="nav-item dropdown" >
-		      <a class="nav-link dropdown-toggle topMenu text-body" href="#" id="navbardrop" data-toggle="dropdown">
+		    <li class="nav-item " >
+		      <a class="nav-link  topMenu text-body" href="${contextPath }/book/list/information_technology?" id="navbardrop" >
 		        도서쇼핑
 		      </a>
-		      <div class="dropdown-menu">
-		        <a class="dropdown-item" href="${contextPath }/book/home">도서쇼핑홈</a>
-		        <a class="dropdown-item" href="#">쇼핑--2</a>
-		        <a class="dropdown-item" href="#">쇼핑--3</a>
-		      </div>
+
 		    </li>
 		   </div>  
 		<!-- 메뉴얼 -->
@@ -112,9 +115,6 @@
 		        <a class="dropdown-item" href="${contextPath }/hope/requestList">비치 희망도서 신청현황</a>
 		        <a class="dropdown-item" href="${contextPath }/hope/requestForm">비치 희망도서 신청하기</a>
 		        <a class="dropdown-item" href="${contextPath }/book/takeList">도서 대여현황 및 신청</a>
-		        <a class="dropdown-item" href="${contextPath }/hope/requestMaster">대여/도서신청 관리(관리자)</a>
-		        
-	
 		      </div>
 		    </li>
 		   </div>  
@@ -125,9 +125,9 @@
 		        관리자페이지
 		      </a>
 		      <div class="dropdown-menu ">
-		        <a class="dropdown-item" href="#">회원정보관리</a> <!-- 글쓰기 -->
-		        <a class="dropdown-item" href="${contextPath }/admin/home">도서관리자 메뉴</a>
-		        <a class="dropdown-item" href="${contextPath }/admin">---3</a>
+		        <a class="dropdown-item" href="${contextPath }/member/memInfo">회원정보관리</a> <!-- 글쓰기 -->
+		        <a class="dropdown-item" href="${contextPath }/admin/book">도서관리자 메뉴</a>
+		        <a class="dropdown-item" href="${contextPath }/hope/requestMaster">대여/도서신청 관리(관리자)</a>
 		      </div>
 			</li>
 		</div>

@@ -239,6 +239,14 @@
 	 ===============================================대여======================================================== 
 	 -->
 	 
+	 <!-- 총 게시물(책) 수 -->
+	<select id="getTakeTotalCount" resultType="int">
+		select count(*) from book_table
+		<where>
+			<include refid="takeCondition" />
+		</where>
+	</select>
+	 
 	 
 	<sql id="takeCondition">
 		<trim prefix="and">
@@ -270,7 +278,7 @@
 		        rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate, reason
 		    from 
 		        book_table
-		    where rownum <= #{maxRow}
+		    where rownum <= #{maxRow} 
 		]]>
 			<include refid="takeCondition"/>
 		<![CDATA[ 
@@ -300,7 +308,7 @@
 			<include refid="takeCondition"/>
 		<![CDATA[ 
 		) 
-		where rn > #{minRow} and take ='신청대기'
+		where rn > #{minRow} 
 		]]> 
 	</select>
 	<!-- 대여승인 -->

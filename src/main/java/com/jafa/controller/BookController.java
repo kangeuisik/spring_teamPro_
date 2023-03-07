@@ -83,7 +83,6 @@ public class BookController {
 	@ResponseBody
 	public ResponseEntity<String> requestTake(@RequestBody BookVO bookVO) {
 		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
-	
 		String bookName = bookVO.getBookName();
 		bookRepository.requestTake(bookName);
 		return new ResponseEntity<String>("test",HttpStatus.OK);
@@ -91,9 +90,11 @@ public class BookController {
 	//대여신청한것을 관리자가 처리
 	@GetMapping("/takeMaster")
 	public String takeMaster(@ModelAttribute("cri") Criteria criteria,
-			Model model) {
+			Model model, String type,String keyword) {
+		criteria.setType(type);
+		criteria.setKeyword(keyword);
 		model.addAttribute("takeMaster",bookRepository.takeMaster(criteria))
-		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
+		.addAttribute("p", new Pagination(criteria, bookRepository.getTakeTotalCount(criteria)));
 		return "book/takeMaster";
 	}
 	
