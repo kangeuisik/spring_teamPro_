@@ -303,7 +303,7 @@
 		       rownum as rn, bookNo, cate_id, bookName, author, publisher, take, takePrice, takeDate, returnDate
 		    from 
 		        book_table
-		    where rownum <= #{maxRow}
+		    where rownum <= #{maxRow} and take='신청대기'
 		]]>
 			<include refid="takeCondition"/>
 		<![CDATA[ 

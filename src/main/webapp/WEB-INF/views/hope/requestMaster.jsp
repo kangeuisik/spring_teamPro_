@@ -32,6 +32,7 @@
 		</div>
 		<div class="col-9">
 			<div >
+				
 				<a href="${contextPath }/book/takeMaster?type=TR&keyword=신청대기" class="btn btn-info mb-3 mr-3">대여관리</a>
 				<a href="${contextPath }/hope/requestMaster" class="btn btn-info mb-3 mr-3">신청관리</a>
 			</div>
