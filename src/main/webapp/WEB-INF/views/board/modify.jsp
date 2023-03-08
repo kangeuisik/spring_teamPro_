@@ -86,8 +86,8 @@
 
 <script>
 $(function(){
-	//파일 이미지가 있을때 
-	//삭제 체크란
+	
+	//파일이미지가 있을때 삭제 체크박스
 	$('.delChk').change(function(){
 		console.log($(this).prop('checked'));
 		if($(this).prop('checked')){

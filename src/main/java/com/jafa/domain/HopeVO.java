@@ -17,9 +17,9 @@ import lombok.ToString;
 public class HopeVO {
 	
 	private Long rno;	//신청번호
-	private Long mNum;	//회원 번호
-	private String mid;
-	private String mname; //회원이름
+	private Long mno;	//회원 번호
+	private String id;
+	private String name; //회원이름
 	private String nbookName; //새책 이름
 	private String nbookWriter; //새책 저자
 	private String npublisher; // 새책 출판사

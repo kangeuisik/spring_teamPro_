@@ -47,6 +47,7 @@
 		<div id="demo" class="collapse mt-5">
 			<form action="${contextPath }/hope/request" method="post">
 				<table class="table">
+
 					<tr>
 						<th>
 							<div class="input-group mb-3">
@@ -56,11 +57,12 @@
 							    </div>
 							    <div class="input-group-prepend">
 							   		<span class="input-group-text">신청인 아이디</span>
-							    	<input type="text" class="form-control" placeholder="아이디" name="mid">
+							    	<input type="text" class="form-control" placeholder="아이디" name="id">
 							  	</div>
 							</div>
 						</th>
 					</tr>
+				
 					<tr>
 						<th>
 							<div class="input-group mb-3">
@@ -95,11 +97,11 @@
 						  <div class="input-group mb-3">
 						    <div class="input-group-prepend">
 						    	<span class="input-group-text">회원번호</span>
-						   		<input type="text" class="form-control" placeholder="" name="mNum" >
+						   		<input type="text" class="form-control" placeholder="" name="mno" >
 						    </div>
 						    <div class="input-group-prepend">
 						    	<span class="input-group-text">회원이름</span>
-						   		<input type="text" class="form-control" placeholder="" name="mname" >
+						   		<input type="text" class="form-control" placeholder="" name="name" >
 						    </div>
 						  </div>
 						  </th>

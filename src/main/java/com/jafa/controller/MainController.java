@@ -16,14 +16,16 @@ public class MainController {
 	@Autowired
 	BoardRepository boardRepository;
 	
+	//메인페이지
 	@GetMapping("/main")
 	public String main(Model model) {
+		//글 미리보기 , 각 게시판의 최신글 3개의 항목 불러오는 코드
 		model.addAttribute("threeNotice",boardRepository.mainNotice());
 		model.addAttribute("threeReview", boardRepository.mainReview());
 		model.addAttribute("threeEtc", boardRepository.mainEtc());
 		return "/main/main";
 	}
-	
+	//테스트 코드
 	@GetMapping("/test")
 	public String test() {
 		return"main/test";

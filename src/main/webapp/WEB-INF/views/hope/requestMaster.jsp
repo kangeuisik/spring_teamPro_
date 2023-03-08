@@ -54,7 +54,7 @@
 							<td>${r.nbookName }</td>
 							<td>${r.nbookWriter }</td>
 							<td>${r.npublisher }</td>
-							<td>${r.mid }</td>
+							<td>${r.id }</td>
 							<td> 
 			 					<input type="checkbox" name="goResult_ck" class="form-control resultGo_ckbox" value="${r.rno }">
 							</td>

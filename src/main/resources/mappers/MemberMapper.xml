@@ -50,7 +50,7 @@
 	</select>
 	 
 	<update id="profileUpdate" parameterType="com.jafa.domain.MemberVO">
-		update mem_tbl set profile=#{profile} where id=#{id}
+		update mem_tbl set profile=#{profile,jdbcType=VARCHAR} where id=#{id}
 	</update>
 
 

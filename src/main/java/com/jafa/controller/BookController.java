@@ -77,17 +77,16 @@ public class BookController {
 		.addAttribute("p", new Pagination(criteria, bookRepository.getTotalCount(criteria)));
 		return "book/takeList"; 
 	}
-	
 	//대여 신청처리
 	@PostMapping("/take")
-	@ResponseBody
+	@ResponseBody //신청하면 신청대기로 take를 '신청확인중'으로 업데이트
 	public ResponseEntity<String> requestTake(@RequestBody BookVO bookVO) {
-		//신청하면 신청대기로 take를 '신청확인중'으로 업데이트
 		String bookName = bookVO.getBookName();
 		bookRepository.requestTake(bookName);
 		return new ResponseEntity<String>("test",HttpStatus.OK);
 	}
-	//대여신청한것을 관리자가 처리
+	
+	//대여신청 후 관리자 페이지
 	@GetMapping("/takeMaster")
 	public String takeMaster(@ModelAttribute("cri") Criteria criteria,
 			Model model, String type,String keyword) {
@@ -97,25 +96,20 @@ public class BookController {
 		.addAttribute("p", new Pagination(criteria, bookRepository.getTakeTotalCount(criteria)));
 		return "book/takeMaster";
 	}
-	
 	//'신청대기'->대여중으로 업데이트
 	@PostMapping("/yesUpdate")
 	@ResponseBody
 	public ResponseEntity<String> resultYesUpdate(@RequestBody BookVO bookN) {
-
-		String bookName = bookN.getBookName();
-		bookRepository.yesUpdate(bookName);
+		String bookName = bookN.getBookName(); // 승인한 책이름
+		bookRepository.yesUpdate(bookName); 
 		return new ResponseEntity<String>("yesTest",HttpStatus.OK);			
-
 	}		
 	//'신청대기'->거절로 업데이트
 	@PostMapping("/noUpdate")
 	@ResponseBody
 	public ResponseEntity<String> resultNoUpdate(@RequestBody BookVO bookR) {
-		String bookName = bookR.getBookName();
-		String reason = bookR.getReason();
-		System.out.println(bookName);
-		System.out.println(reason);
+		String bookName = bookR.getBookName(); //거절한 책이름
+		String reason = bookR.getReason(); //사유
 		bookRepository.noUpdate(bookName,reason);
 		return new ResponseEntity<String>("noTest",HttpStatus.OK);
 	}

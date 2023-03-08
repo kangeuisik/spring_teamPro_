@@ -72,9 +72,11 @@
 
 <script>
 $(function(){
+	//삭제 버튼 이벤트
 	$('.delBoard').click(function(){
 		let form = $('<form/>')
 		form.attr('method','post')
+			//form에 담아 post 형태로 bno(글번호) 담아 controller 전송
 			.attr('action','${contextPath}/board/remove?bno=${b.bno}')
 			.appendTo('body')
 			.submit();

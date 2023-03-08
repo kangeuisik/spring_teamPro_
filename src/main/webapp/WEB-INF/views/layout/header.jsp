@@ -132,23 +132,12 @@
 			</li>
 		</div>
 		<div class="p-2 ml-auto">
-			<c:if test="${!empty mvo}">
+			<c:if test="${not empty mvo}">
 				<c:if test="${empty mvo.profile}">
-					<a href="${contextPath}/member/updateForm" class="d-flex flex-row-reverse">
-						<img class="rounded-circle" src="${contextPath}/resources/images/default.png" style="width: 50px; height: 50px;"/> 
-						${mvo.name} 님Welcome.
-					<a>
+					<li	><img class="rounded-circle" src="${contextPath}/resources/images/default.png" style="width: 50px; height: 50px;"/> ${mvo.name} 님Welcome.</li>
 				</c:if>
 				<c:if test="${not empty mvo.profile}">
-					<div class="d-flex flex-row-reverse">
-						<div>
-						<a href="${contextPath}/member/updateForm">${mvo.name} 님
-						 Welcome.
-						 <img class="rounded-circle" src="${contextPath}/resources/upload/${mvo.profile}" style="width: 50px; height: 50px;"/>
-						 </a>
-						
-						</div> 
-					</div>
+					<li><img class="rounded-circle" src="${contextPath}/memDisplay?id=${mvo.id}&imageFileName=${mvo.profile}" style="width: 50px; height: 50px;"/> ${mvo.name} 님Welcome.</li>
 				</c:if>           
 			</c:if>
 		</div>

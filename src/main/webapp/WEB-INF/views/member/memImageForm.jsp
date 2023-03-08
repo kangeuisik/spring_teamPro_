@@ -20,7 +20,7 @@
                      <td style="width: 110px; vertical-align: middle;">사진 업로드</td>
                      <td colspan="2">
                         <span class="btn btn-default">이미지를 업로드하세요.<br>
-                           <input type="file" name="profile"/>
+                           <input type="file" name="attachFile"/>
                         </span>
                      </td>
                   </tr>

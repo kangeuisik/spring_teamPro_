@@ -70,7 +70,7 @@
 							<th>대여신청일</th>
 							<th>반납예정일</th>
 							<th>대여인</th>
-							<th>상태</th>회원아이디 : ${mvo.id} 회원이름 : ${mvo.name}
+							<th>상태</th>
 						</tr>
 						<c:if test="${empty takeMaster }==">
 							<tr>

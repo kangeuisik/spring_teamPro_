@@ -45,24 +45,23 @@ public class BoardController {
 		return "board/writeForm";
 	}
 	
-	//글쓰기 처리
-	@PostMapping("/write")
+	
+	@PostMapping("/write")//글쓰기 처리
 	public String write(BoardVO vo,
 			@RequestParam("attachFile") MultipartFile multipartFile,
 			RedirectAttributes rttr) {
 
-		if(!multipartFile.isEmpty()) { //첨부파일이 있을대
+		if(!multipartFile.isEmpty()) { //첨부파일이 있을 때
 			String fileName = multipartFile.getOriginalFilename();
 			vo.setImageFileName(fileName);
-			//파일타입결정 : img파일, other
-			if(multipartFile.getContentType().startsWith("image")) { //이미지 파일 일때
+			//파일타입결정 : img파일, other (VO에 enum으로 정의) ,이미지 파일 일때
+			if(multipartFile.getContentType().startsWith("image")) { 
 				vo.setFileType(FileType.IMAGE);
-			}else {//아닐때
+			}else {//이미지 파일이 아닐때
 				vo.setFileType(FileType.OTHER);
 			}
 			boardRepository.insertBoard(vo);//데이터베이스에 저장
 			//업로드
-			// ex) /file01_repo/1/벵갈호랑이.png
 			File uploadPath = new File("c:/file01_spring/"+vo.getBno());
 			if(!uploadPath.exists()) {//업로드패스 생성
 				uploadPath.mkdirs();
@@ -74,7 +73,7 @@ public class BoardController {
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-		}else {//없을때
+		}else {//첨부파일이 없을 때 
 			boardRepository.insertBoard(vo);
 		}
 	    return "/board/list";
@@ -110,26 +109,18 @@ public class BoardController {
 	public String modify(BoardVO vo,RedirectAttributes rttr,
 			@RequestParam(defaultValue = "false") Boolean delChk,
 			@RequestParam("attachFile") MultipartFile multipartFile) {
-
-		if(delChk) { //이미지 삭제 및 내용변경
-			
-			//파일삭제
+		if(delChk) { //이미지 삭제만 하고 내용변경		
 			BoardVO detail = boardRepository.detail(vo.getBno());
-			File file = new File("c:/file01_repo/"+detail.getBno()+"/"+detail.getImageFileName());
-			File folder = new File("c:/file01_repo/"+detail.getBno());
-			file.delete();
-			folder.delete();
-			//modify호출
+			File file = new File("c:/file01_spring/"+detail.getBno()+"/"+detail.getImageFileName());
+			File folder = new File("c:/file01_spring/"+detail.getBno());
+			file.delete(); // 파일 삭제
+			folder.delete(); // 생성된 폴더 삭제
 			boardRepository.modify(vo);
 		}else {
-			
-			if(!multipartFile.isEmpty()) { //이미지 내용 둘다 변경
-				
-				//삭제
-				BoardVO detail = boardRepository.detail(vo.getBno());
+			if(!multipartFile.isEmpty()) { //이미지 내용 둘다 변경	
+				BoardVO detail = boardRepository.detail(vo.getBno()); 
 				File file = new File("c:/file01_spring/"+detail.getBno()+"/"+detail.getImageFileName());
 				file.delete();
-				
 				//새로운 파일 업로드
 				String fileName = multipartFile.getOriginalFilename();
 				vo.setImageFileName(fileName);
@@ -139,9 +130,8 @@ public class BoardController {
 				}else {//아닐때
 					vo.setFileType(FileType.OTHER);
 				}
-				
 				//수정 후 업로드
-				File uploadPath = new File("c:/file01_repo/"+vo.getBno());
+				File uploadPath = new File("c:/file01_spring/"+vo.getBno());
 				if(!uploadPath.exists()) {//업로드패스 생성
 					uploadPath.mkdirs();
 				}
@@ -152,15 +142,11 @@ public class BoardController {
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
-				
-				//modify 호출
 				boardRepository.modify(vo);
-				
 			}else { // 내용만변경
 				boardRepository.modifyOnlyContent(vo);
 			}
 		}
-		System.out.println(delChk);
 		return "redirect:/board/list";
 	}
 	

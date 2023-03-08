@@ -11,8 +11,8 @@
 
 <!-- 신청하기 처리 -->
 <insert id="addRequest">
-	insert into hopeBook(rno,mNum,mid,mname,nbookName,nbookWriter,npublisher,result)
-	values(rno_seq.nextval,#{mNum},#{mid},#{mname},#{nbookName},#{nbookWriter},#{npublisher},'승인대기')
+	insert into hopeBook(rno,mno,id,name,nbookName,nbookWriter,npublisher,result)
+	values(rno_seq.nextval,#{mno},#{id},#{name},#{nbookName},#{nbookWriter},#{npublisher},'승인대기')
 </insert>
 
 <!-- 신청결과 전송(승인/거절) -->
@@ -59,12 +59,12 @@
 	<select id="getRequestList" resultType="HopeVO">
 		<![CDATA[
 		select 
-		    rn, rno, mNum,mid, mname, nbookname, nbookWriter, npublisher,requestDate,result,etc
+		    rn, rno, mno, id, name, nbookname, nbookWriter, npublisher,requestDate,result,etc
 		from
 		(
 		    select 
 		        /*+ index_desc(hopebook primary_rno) */
-		       rownum as rn, rno, mNum, mid, mname, nbookname, nbookWriter, npublisher,requestDate,result,etc
+		       rownum as rn, rno, mno, id, name, nbookname, nbookWriter, npublisher,requestDate,result,etc
 		    from 
 		        hopeBook
 		    where rownum <= #{maxRow}
@@ -81,20 +81,20 @@
 	<select id="getRequestMaster" resultType="HopeVO">
 		<![CDATA[
 		select 
-		    rn, rno, mNum,mid, mname, nbookname, nbookWriter, npublisher,requestDate,result,etc
+		    rn, rno, mno, id, name, nbookname, nbookWriter, npublisher,requestDate,result,etc
 		from
 		(
 		    select 
 		        /*+ index_desc(hopebook primary_rno) */
-		       rownum as rn, rno, mNum, mid, mname, nbookname, nbookWriter, npublisher,requestDate,result,etc
+		       rownum as rn, rno, mno, id, name, nbookname, nbookWriter, npublisher,requestDate,result,etc
 		    from 
 		        hopeBook
-		    where rownum <= #{maxRow}
+		    where rownum <= #{maxRow} and result ='승인대기'
 		]]>
 			<include refid="condition"/>
 		<![CDATA[ 
 		) 
-		where rn > #{minRow} and result ='승인대기'
+		where rn > #{minRow}
 		]]> 
 	</select>
 	

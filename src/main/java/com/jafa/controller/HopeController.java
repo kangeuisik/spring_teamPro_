@@ -39,7 +39,8 @@ public class HopeController {
 	@GetMapping("/requestForm")
 	public String requestForm(Model model,@ModelAttribute("cri") Criteria criteria) {
 		//새신청번호
-		model.addAttribute("rno", hopeRepository.getNewRno()).addAttribute("r",hopeRepository.getRequestList(criteria));
+		model.addAttribute("rno", hopeRepository.getNewRno())
+		.addAttribute("r",hopeRepository.getRequestList(criteria));
 		return"hope/requestForm";
 	}
 	//신청처리
