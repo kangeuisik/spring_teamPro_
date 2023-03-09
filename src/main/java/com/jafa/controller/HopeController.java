@@ -1,7 +1,6 @@
 package com.jafa.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,23 +65,35 @@ public class HopeController {
 				@RequestParam(value = "goResult_ck", required=false) String[] goValue,
 				@RequestParam(value = "noResult_ck", required=false) String[] noValue,
 				@RequestParam(value = "etc", required=false) String[] etc ) {
-		//승인값이 있다면
-		if(goValue.length>0) {
-			for(String g : goValue) { //승인값을 반복문돌려서
-				int Grno = Integer.parseInt(g); //인트로 변환
-				hopeRepository.updateGo(Grno); //데이터 넣기
+		if(noValue==null || goValue==null) {// 거절값이 null 혹은 승인값이 null인 경우
+			if(noValue==null) { //거절값이 null이면
+				for(String g : goValue) {//승인을 실행하고
+					int Grno = Integer.parseInt(g);
+					hopeRepository.updateGo(Grno);
+				}
 			}
-		}else 
-		
-		//거절값이 있다면
-		if(noValue.length>0) {
-//		Map<Integer, String> map = new HashMap<Integer, String>();
-			for(int i=0; i<noValue.length;i++) {
-				hopeRepository.updateNo(Integer.parseInt(noValue[i]),etc[i]);
+			if(goValue==null) {//승인값이 null이면
+				for(int i=0; i<noValue.length;i++) { //거절을 실행하고
+					int Xrno = Integer.parseInt(noValue[i]);
+					hopeRepository.updateNo(Xrno,etc[i]);
+				}
 			}
-		}	
+		}//거절값과 승인값 둘다 null이 아니면 둘다 실행
+		if(goValue!=null && noValue!=null) {
+			for(int i=0; i<noValue.length;i++) { //거절실행
+				int Xrno = Integer.parseInt(noValue[i]);
+				hopeRepository.updateNo(Xrno,etc[i]);
+			}
+			for(String g : goValue) { //승인실행
+				int Grno = Integer.parseInt(g);
+				hopeRepository.updateGo(Grno);
+			}
+		}
 		return "hope/requestList";	
 	}
+	
+	
+	
 }
 /*
   -컨트롤러 

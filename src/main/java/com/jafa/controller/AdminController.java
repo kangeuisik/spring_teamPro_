@@ -43,16 +43,17 @@ public class AdminController {
 	// 관리자 홈
 	@GetMapping("/home")
 	public String home() {
-		application.setAttribute("cateList", categoryRepository.getCateList());
-		application.setAttribute("subCateList", categoryRepository.getSubCateList());
-		application.setAttribute("cate", bookRepository.bookOfCate()); // 카테고리별 게시물 수 포함된 거
-		application.setAttribute("subCate", bookRepository.bookOfSubCate()); // 서브카테고리별 게시물 수 포함된 거
+
 		return "/admin/home";
 	}
 	
 	// 도서관리페이지로 이동
 	@GetMapping("/book")
 	public String book(@ModelAttribute("cri") Criteria criteria, Model model) {
+		application.setAttribute("cateList", categoryRepository.getCateList());
+		application.setAttribute("subCateList", categoryRepository.getSubCateList());
+		application.setAttribute("cate", bookRepository.bookOfCate()); // 카테고리별 게시물 수 포함된 거
+		application.setAttribute("subCate", bookRepository.bookOfSubCate()); // 서브카테고리별 게시물 수 포함된 거
 		model.addAttribute("latest", bookRepository.latestList()); // 최근에 등록한 상품 목록
 		return "admin/book";
 	}

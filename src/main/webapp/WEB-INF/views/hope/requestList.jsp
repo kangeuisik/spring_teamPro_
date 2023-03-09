@@ -49,8 +49,8 @@
 					</div>
 				</form>		
 			</div>
-			<div>
-				<table class="table">
+			<div class="container">
+				<table class="table text-center">
 					<tr>
 						<th>신청번호</th>
 						<th>책제목</th>
@@ -66,9 +66,13 @@
 						<td>${r.nbookName }</td>
 						<td>${r.nbookWriter }</td>
 						<td>${r.npublisher }</td>
-						<td>${r.mid }</td>
-						<td>${r.result }</td>
-						<td>${r.etc }</td>
+						<td>${r.id }</td>
+						<td>
+							<p class="${r.result=='승인'? 'bg-info':
+									 r.result=='승인대기'? 'bg-secondary':
+									 r.result=='거절'? 'bg-danger': ''} text-light text-center">${r.result }</p>
+						</td>
+						<th>${r.etc }</th>
 					</tr>
 					</c:forEach>
 				</table>	

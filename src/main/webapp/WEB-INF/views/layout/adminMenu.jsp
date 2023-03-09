@@ -22,10 +22,13 @@
 				<li class="nav-item active dropdown"><!-- 도서관리자에 커서올리면 -->
 					<a class="nav-link" href="${contextPath}/admin/book">도서관리자</a>
 					<div class="dropdown-menu"> <!-- IT, 언어, 예술...-->
-						<c:forEach items="${cateList}" var="c">
-						<div class="active dropdown dropright "> <!-- 대분류에 커서를 올리면 -->
+					<!--  -->	<c:forEach items="${cateList}" var="c">
+					${c.cate_id}
+						<!-- 
+						<div class="active dropdown dropright "> 
 							<a class="dropdown-item" href="${contextPath}/book/list/${c.cate_id}">${c.cate_name}</a>
-						</div>
+						</div> 
+						-->
 						</c:forEach>	
 					</div>
 				</li>

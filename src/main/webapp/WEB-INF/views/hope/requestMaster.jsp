@@ -119,39 +119,39 @@ $(function(){
 	});	//페이징처리
 	
 	
-	let GoResultSet = new Set(); 
-	let NoResultSet = new Set();
+	let GoResultSet = new Set();//승인집합
+	let NoResultSet = new Set();//거절집합 
 	
 	//승인
-	$('.resultGo_ckbox').on('change',function(){ //셀렉 이벤트
-		let goResult = $(this).val(); //위 클래스의 밸류값.
-		let checkOn	= $(this).prop('checked'); //
-		let etc = $(this).closest('td').next('td').next('td');
+	$('.resultGo_ckbox').on('change',function(){ //값이 변할때 발생하는 이벤트 'change' : checked/unchecked
+		let goResult = $(this).val(); //위 클래스의 밸류값. 신청번호값
+		let checkOn	= $(this).prop('checked'); // 체크선택
+		let etc = $(this).closest('td').next('td').next('td'); //etc항목 td
 			if(checkOn){//승인을 체크하면
-				GoResultSet.add(goResult+'체크');
+				GoResultSet.add(goResult+'체크'); //승인집합에 신청번호값 추가
 				etc.remove(); //승인을 체크하면 비고란을 쓸수 없게
-				$(this).closest('tr').find('.resultNo_ckbox') //두항목 모두 체크하지 못하게 막아놓기 하나만 체크할수있게
+				$(this).closest('tr').find('.resultNo_ckbox') //승인을 체크하면 거절은 체크할수 없게, 같은신청번호의 두항목을 클릭할 수 없게 
 					.prop("checked",false).prop("disable",false);
 			}else{// 다시 체크해제 했다면	
-				GoResultSet.delete(goResult);
+				GoResultSet.delete(goResult);//승인집합의 해당신청번호값 제거
 			 }
 		console.log(GoResultSet);
 	})//resultGo
 	
 	//거절
 	$('.resultNo_ckbox').on('change',function(){
-		let noResult = $(this).val(); //위 클래스의 밸류값.
+		let noResult = $(this).val(); //위 클래스의 밸류값. 신청번호값
 		let checkOn	= $(this).prop('checked'); //
 		let etc = $(this).closest('td').next('td');
 			if(checkOn){
 				NoResultSet.add(noResult+'체크');
 				etc.remove();
-				$(this).closest('tr').append("<td><input type='text' name='etc' class='etc' ></td>")
-				$(this).closest('tr').find('.resultGo_ckbox')
+				$(this).closest('tr').append("<td><input type='text' name='etc' class='etc' ></td>")//거절사유란 추가
+				$(this).closest('tr').find('.resultGo_ckbox')//거절을 체크하면 승인을 체크할수 없게,
 					.prop("checked",false).prop("disable",false);
 			}else{//체크해제 한다면
-				NoResultSet.delete(noResult);
-				etc.remove();
+				NoResultSet.delete(noResult);//거절집합에서 거절신청번호 제거
+				etc.remove(); // 거절사유 입력란 제거
 			}
 		console.log(NoResultSet);
 	})//resultNo

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.jafa.domain.Criteria;
 import com.jafa.domain.MemberVO;
 
 @Mapper
@@ -16,5 +17,6 @@ public interface MemberRepository {
 	public MemberVO getMember(String id);	
 	public void profileUpdate(MemberVO mvo);
 	
-	List<MemberVO> getMemberInfo();
+	List<MemberVO> getMemberInfo(Criteria criteria);
+	public int getTotalCount(Criteria criteria);
 }
