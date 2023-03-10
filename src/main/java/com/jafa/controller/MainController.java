@@ -17,7 +17,7 @@ public class MainController {
 	BoardRepository boardRepository;
 	
 	//메인페이지
-	@GetMapping("/main")
+	@GetMapping(value = {"/", "/main"})
 	public String main(Model model) {
 		//글 미리보기 , 각 게시판의 최신글 3개의 항목 불러오는 코드
 		model.addAttribute("threeNotice",boardRepository.mainNotice());

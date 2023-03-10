@@ -47,7 +47,7 @@ public class MemberController {
 	@PostMapping("/register")
 	public String memRegister(MemberVO vo, String password1, String password2, 
 								RedirectAttributes rttr, HttpSession session) {
-		if(vo.getId() == null || vo.getId().equals("") ||
+		if(vo.getId() == null || vo.getId().equals("") || //id가 없다면 
 		   password1 == null || password1.equals("") ||
 		   password2 == null || password2.equals("") ||
 		   vo.getName() == null || vo.getName().equals("") ||
@@ -109,8 +109,8 @@ public class MemberController {
 			session.setAttribute("mvo", mvo); 	// ${!empty mvo}
 			return "redirect:/main";	// 메인
 		} else {			// 로그인 실패
-			rttr.addFlashAttribute("msgType", "실패 메세지");
-			rttr.addFlashAttribute("msg", "다시 로그인 하세요.");
+			rttr.addFlashAttribute("msgType", "로그인 실패");
+			rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호가 일치하지 않거나 없습니다.");
 			return "redirect:/member/loginForm";
 		}
 	}

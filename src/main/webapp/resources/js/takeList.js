@@ -11,7 +11,7 @@ let takeService ={
 				$('.modal').hide();
 			},
 			error : function() {
-				alert('실패');			
+				alert('실패')	
 			}
 		})	
 	}
@@ -66,7 +66,7 @@ $(function(){
 		let howDay = $(this).attr('target');
 		let reject = '<td>'+reason+'</td>';
 		let returnDate = '<td>반납예정일 : '+howDay+'</td>';
-		if(take=='대여'){
+		if(take=='대여가능'){
 			$('#addTake').show();
 		}else if(take=='신청대기'){
 			$('#wait').show();

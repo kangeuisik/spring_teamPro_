@@ -56,6 +56,7 @@
 					<div class="form-group mr-2">
 						<a href="${contextPath}/book/takeList"  class="btn btn-info">새로고침</a>
 					</div>
+					
 				</form>		
 			</div>
 			<div>
@@ -122,7 +123,7 @@
 		</div>
 	</div>	
 </div>
-<!-- 신청대기 누르면 나오는 모달창(관리자) -->
+<!-- =============================신청대기 누르면 나오는 모달창(관리자)============================= -->
 <div class="modal" id="result">
 	<div class="modal-dialog">
 		<form>

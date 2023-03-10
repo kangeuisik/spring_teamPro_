@@ -134,10 +134,14 @@
 		<div class="p-2 ml-auto">
 			<c:if test="${not empty mvo}">
 				<c:if test="${empty mvo.profile}">
-					<li	><img class="rounded-circle" src="${contextPath}/resources/images/default.png" style="width: 50px; height: 50px;"/> ${mvo.name} 님Welcome.</li>
+					<li	><img class="rounded-circle" 
+					src="${contextPath}/resources/images/default.png" 
+					style="width: 50px; height: 50px;"/> ${mvo.name} 님Welcome.</li>
 				</c:if>
 				<c:if test="${not empty mvo.profile}">
-					<li><img class="rounded-circle" src="${contextPath}/memDisplay?id=${mvo.id}&imageFileName=${mvo.profile}" style="width: 50px; height: 50px;"/> ${mvo.name} 님Welcome.</li>
+					<li><img class="rounded-circle" 
+					src="${contextPath}/memDisplay?id=${mvo.id}&imageFileName=${mvo.profile}" 
+					style="width: 50px; height: 50px;"/> ${mvo.name} 님Welcome.</li>
 				</c:if>           
 			</c:if>
 		</div>

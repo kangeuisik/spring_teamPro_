@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jafa.repository.MemberRepository">
-
+<!-- 회원정보관리 페이지 (관리자) -->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from mem_tbl
 		<where>

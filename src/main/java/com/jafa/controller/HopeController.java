@@ -65,6 +65,10 @@ public class HopeController {
 				@RequestParam(value = "goResult_ck", required=false) String[] goValue,
 				@RequestParam(value = "noResult_ck", required=false) String[] noValue,
 				@RequestParam(value = "etc", required=false) String[] etc ) {
+	//기존 거절 코드 
+	//거절값과 거절사유를 각각 List나 Map 형태로 받아 거절List와 거절사유List를 반복문을 통해 짝을 지어 전송하여 처리하려 했으나 
+	//코드를 축약하는 과정에서 배열로 받아 반복문을 통해 두 파라미터를 동시에 전송하여 처리해도 이상이 없는것을 확인
+	
 		if(noValue==null || goValue==null) {// 거절값이 null 혹은 승인값이 null인 경우
 			if(noValue==null) { //거절값이 null이면
 				for(String g : goValue) {//승인을 실행하고

@@ -9,6 +9,7 @@ let takeResultService={
 			data : JSON.stringify(bookN),
 			success : function(yesTest) {
 				$('.modal').hide();
+				alert('승인처리 되었습니다.')
 			},
 			error : function() {
 				alert('실패');			
@@ -24,6 +25,7 @@ let takeResultService={
 			data : JSON.stringify(bookR),
 			success : function(noTest) {
 				$('.modal').hide();
+				alert('거절처리 되었습니다.')
 			},
 			error : function() {
 				alert('실패');			

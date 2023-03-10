@@ -34,14 +34,14 @@
    <!-- Modal content-->
       <div id="messageType" class="modal-content panel-info">
          <div class="modal-header panel-heading">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">${msgType}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
          </div>
       <div class="modal-body">
          <p>${msg}</p>
       </div>
       <div class="modal-footer">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-info" data-dismiss="modal">돌아가기</button>
       </div>
       </div>
    </div>

@@ -52,6 +52,12 @@
 					<div class="form-group mr-2">
 						<a href="${contextPath}/book/takeList"  class="btn btn-info">새로고침</a>
 					</div>
+					<div>
+						<a class="badge badge-warning" href="${contextPath }/book/takeList?type=TR&keyword=신청대기">신청대기</a>
+						<a class="badge badge-success" href="${contextPath }/book/takeList?type=TR&keyword=대여중">대여중</a>
+						<a class="badge badge-danger" href="${contextPath }/book/takeList?type=TR&keyword=거절">거절</a>
+						<a class="badge badge-info" href="${contextPath }/book/takeList?type=TR&keyword=대여가능">대여가능</a>
+					</div>
 				</form>		
 			</div>
 			<div>
@@ -72,7 +78,7 @@
 						<td>${t.author }</td>
 						<td>${t.publisher }</td>
 						<td>
-							<a href="${t.bookName }" class="${t.take =='대여'? 'btn btn-info':
+							<a href="${t.bookName }" class="${t.take =='대여가능'? 'btn btn-info':
 															t.take =='신청대기'? 'btn btn-warning':
 															t.take =='대여중'? 'btn btn-success':
 															t.take =='거절'? 'btn btn-danger':''} thisTitle" 
