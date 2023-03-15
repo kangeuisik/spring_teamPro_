@@ -1,7 +1,7 @@
 console.log('북서비스');
 
 let bookService = {
-	
+	// Pagination [criteria(page=1, perPageNum=10)]
 	// 목록
 	list : function(criteria) {
 		
@@ -14,7 +14,7 @@ let bookService = {
 			success : function(map) {
 				let p = map.p;
 				bookListRender(map);
-				paginationRender(p); // Pagination [criteria(page=1, perPageNum=10)]
+				paginationRender(p); 
 			},
 			error : function() {
 				alert('목록 조회 실패');			
@@ -267,8 +267,8 @@ $(function() {
 			perPageNum : parseInt(perPage.val()),
 			cate_id : cate_id,
 			subCate_id : subCate_id,
-			type : typeValue, // 검색 할 때 필요한거
-			keyword : keywordValue // 검색 할 때 필요한거
+			type : typeValue,
+			keyword : keywordValue 
 		}
 		bookService.list(criteria);
 	});

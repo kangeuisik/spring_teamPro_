@@ -41,6 +41,10 @@
     width: 100%;
     height: 100%;
   }
+ 
+.badge {
+	font-weight: bold;
+}
 </style>
 
 
@@ -60,15 +64,14 @@
 		<c:if test="${empty mvo}">
 			<a href="${contextPath}/member/loginForm" class="badge badge-light">로그인하기</a>
 			<a href="${contextPath}/member/join" class="badge badge-light">회원가입하기</a>
-			</ul>
+			
 		</c:if>
 		<!--추가함-->
 		<c:if test="${!empty mvo}">
-			<ul class="d-flex justify-content-between memberInfo">
-				<li><a href="${contextPath}/member/updateForm"><span class="badge badge-light"></span> 회원정보수정</a></li>
-				<li><a href="${contextPath}/member/imageForm"><span class="badge badge-light"></span> 사진등록</a></li>
-				<li><a href="${contextPath}/member/logout"><span class="badge badge-light"></span> 로그아웃</a></li>            		
-			</ul>
+			<a href="${contextPath}/book/cartPage" class="badge badge-light">장바구니</a>
+			<a href="${contextPath}/member/updateForm" class="badge badge-light">회원정보수정</a>
+			<a href="${contextPath}/member/imageForm" class="badge badge-light">사진등록</a>
+			<a href="${contextPath}/member/logout" class="badge badge-light">로그아웃</a>          		
 		</c:if>
 	 </div>	
 	</div>

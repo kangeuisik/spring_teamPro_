@@ -1,3 +1,4 @@
+//ajax
 let takeService ={
 	requestTake : function(bookVO) {
 		$.ajax({
@@ -41,15 +42,15 @@ $(function(){
 	let takePrice = $('.takePrice').val();
 	let returnDate = $('.returnDate').val();
 	
-	// 대여 신청 모달창 띄우는거
+	// 대여 신청 모달 화면
 	$('.thisTitle').on('click',function(e){
 		e.preventDefault();
 		let bookName = $(this).attr('href'); // 이름 가져오고
-		// td태그 만드는 거
+		// td태그 삽입
 		let content = '<td>'+bookName+'</td>';
 			content += '<td>'+returnDate+'</td>';
 			content += '<td>'+takePrice+'</td>';
-		$('.bookName').html(content) // tr안에 추가
+		$('.bookName').html(content) // tr내부에 삽입
 					.submit();
 		// 신청하기 버튼 이벤트			
 		$('.takeRequest').on('click',function(){

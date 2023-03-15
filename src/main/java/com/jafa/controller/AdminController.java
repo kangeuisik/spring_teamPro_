@@ -189,9 +189,8 @@ public class AdminController {
 		categoryRepository.saveCate(dto);
 		return "/admin/home";
 	}
-
 	// 서브카테고리 추가
-	@PostMapping("/addSubCate") // org.apache.ibatis.binding.BindingException
+	@PostMapping("/addSubCate") 
 	public String addSubCate(CategoryDTO dto) {
 		System.out.println("dto : " + dto);
 		categoryRepository.saveSubCate(dto);
@@ -204,7 +203,6 @@ public class AdminController {
 		categoryRepository.delCate(id);
 		return "/admin/home";
 	}
-
 	// 서브 카테고리 삭제
 	@PostMapping("/delSubCate")
 	public String delSubCate(String id) {

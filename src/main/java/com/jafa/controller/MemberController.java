@@ -229,7 +229,7 @@ public class MemberController {
 			if(multipartFile.getContentType().startsWith("image")) { //이미지 파일 일때
 				vo.setFileType(com.jafa.domain.MemberVO.FileType.IMAGE);
 			}else {//아닐때
-				vo.setFileType(com.jafa.domain.MemberVO.FileType.OTHER);
+			//	vo.setFileType(com.jafa.domain.MemberVO.FileType.OTHER);
 			}
 			memberRepository.profileUpdate(vo);//데이터베이스에 저장
 			//업로드
@@ -246,7 +246,10 @@ public class MemberController {
 				e.printStackTrace();
 			}
 		}else {//없을때
-			memberRepository.profileUpdate(vo);//데이터베이스에 저장
+			//memberRepository.profileUpdate(vo);//데이터베이스에 저장
+			rttr.addFlashAttribute("msgType", "실패메세지");
+			rttr.addFlashAttribute("msg", "프로필사진을 등록하지 않았습니다.");
+			return "member/memImageForm";
 		}
 		return "redirect:/main";
 	}

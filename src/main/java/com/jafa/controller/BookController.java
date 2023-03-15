@@ -54,6 +54,11 @@ public class BookController {
 		criteria.setSubCate_id(subCate_id);
 		return "book/list";
 	}
+	// 장바구니 페이지로 이동
+	@GetMapping("/cartPage")
+	public String cartPage() {
+		return "cart/cartPage";
+	}
 	
 	//글상세보기 왜 post로 바꿨는지 -> get요청시 에러...int bookNo가 null??
 	/* Request processing failed; nested exception is java.lang.IllegalStateException: Optional int parameter
@@ -62,7 +67,6 @@ public class BookController {
 	 * Consider declaring it as object wrapper for the corresponding primitive type. */
 	@PostMapping("/detail")
 	public String detail(@ModelAttribute("cri") Criteria criteria, Model model, int bookNo) {
-		System.out.println("디테일 크리테리아~ : "+ criteria);
 		model.addAttribute("detail",bookRepository.findByBookNo(bookNo));
 		return "book/detail";
 	}

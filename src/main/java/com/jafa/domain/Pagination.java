@@ -23,6 +23,12 @@ public class Pagination {
 		this.displayPageNum = 10;
 
 		endPage = (int) Math.ceil(criteria.getPage()/(double)displayPageNum)*displayPageNum;
+		//EX) 현재페이지 5
+		//마지막 페이지 = 현재페이지(5)에서 화면에보여질 페이지 버튼수(10)를 나눈 값을 올림하여
+		// (0.5->1) * 화면에 보여질 페이지 버튼수(10) => 10
+		//ex) 현재페이지 24
+		// 현재페이지(24)에서 화면에 보여질 페이지 버튼수(10)를 나눈값을 올림하여
+		//
 		startPage = endPage - displayPageNum + 1;
 		tempEndPage = (int) Math.ceil((double)totalCount/criteria.getPerPageNum());
 		

@@ -115,7 +115,7 @@ public class BoardController {
 			File folder = new File("c:/file01_spring/"+detail.getBno());
 			file.delete(); // 파일 삭제
 			folder.delete(); // 생성된 폴더 삭제
-			boardRepository.modify(vo);
+			boardRepository.modifyOnlyContent(vo);
 		}else {
 			if(!multipartFile.isEmpty()) { //이미지 내용 둘다 변경	
 				BoardVO detail = boardRepository.detail(vo.getBno()); 
