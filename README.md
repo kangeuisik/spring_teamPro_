@@ -1,7 +1,6 @@
 # '작은 도서관' Team Project
 
-
-
+<img src ='https://github.com/kangeuisik/spring_teamPro/issues/1#issue-1631321407'>
 
 
 1. 개발기간 및 인원
